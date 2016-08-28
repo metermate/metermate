@@ -44,6 +44,32 @@ app.get('/api/meter-locations', function(req, res) {
   });
 });
 
+app.get('/api/meter-events', function(req, res) {
+  var currDate = new Date();
+  currDate.setHours(currDate.getHours() - 2.5);
+  currDate.toISOString();
+  currDate = JSON.stringify(currDate);
+  var parsedDate = currDate.replace(/[-:.]/g, "");
+  var finalDate = parsedDate.substr(1, 15).concat('Z');
+
+  var url = 'https://parking.api.smgov.net/meters/events/since/' + finalDate;
+
+  request.get(url, function(error, response, body) {
+    body = JSON.parse(body);
+    if (error) {
+      res.status(400).send(error);
+    }
+    for (var i = 0; i < body.length; i++) {
+      dbConnection.query('UPDATE meters SET event_type = ?, event_time = ? WHERE meter_id = ?', [body[i].event_type, body[i].event_time, body[i].meter_id], function(err, result) {
+        if (err) {
+          console.error(err);
+        }
+      });
+    }
+    res.status(200).json(body);
+  })
+});
+
 app.listen(app.get('port'), function() {
   console.log('Server listening on port: ', app.get('port'));
 });
