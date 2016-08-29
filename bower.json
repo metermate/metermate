@@ -1,0 +1,22 @@
+{
+  "name": "metermate",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Sam Chi <samuel.sj.chi@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/samsjchi/metermate",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "client/lib"
+  ],
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-ui-router": "^0.3.1"
+  }
+}
