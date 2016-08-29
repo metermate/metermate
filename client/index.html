@@ -1,24 +1,14 @@
 <!DOCTYPE html>
-<html ng-app="metermate">
+<html>
   <head>
     <meta charset="UTF-8">
     <title>MeterMate</title>
-    <link rel="stylesheet" href="./content/styles/styles.css">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEibwDGNgPHeZMtW2UqRrSIAChgdpQfec"></script>
   </head>
   <body>
-    <div ui-view></div>
+    <div class="nav-bar"></div>
 
-    <!-- lib -->
-    <script src="./lib/angular/angular.min.js"></script>
-    <script src="./lib/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <div class="search-bar"></div>
 
-    <!-- app -->
-    <script src="./pages/home/home.js"></script>
-    <script src="./pages/about/about.js"></script>
-    <script src="./pages/map/map.js"></script>
-    <script src="./pages/my-meters/my-meters.js"></script>
-    <script src="./pages/profile/profile.js"></script>
-    <script src="./app.js"></script>
+    <div id="map"></div>
   </body>
 </html>
