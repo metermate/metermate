@@ -18,6 +18,14 @@ app.set('port', process.env.PORT || 1337);
 dbConnection.connect(function(err) {
   if (!err) {
     console.log('Database is connected...');
+    dbConnection.query('DROP TABLE IF EXISTS meters')
+    dbConnection.query('CREATE TABLE meters (meter_id varchar(20), latitude varchar(20), longitude varchar(20), active varchar(20), area varchar(25), street_address varchar(20), event_type varchar(5), event_time varchar(25))', function(err, result){
+      if (err) {
+        console.log('Error creating the table: Meters', err);
+      } else {
+        console.log('Table: Meters created successfully!');
+      }
+    })
   } else {
     console.log('Error connecting to database...');
   }
