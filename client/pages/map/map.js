@@ -1,13 +1,13 @@
 angular
   .module('metermate.map', [])
 
-  .controller('mapCtrl', function($scope, $window, Map) {
+  .controller('MapCtrl', function($scope, $window, Map) {
     var meterData = [];
 
     $window.onload = function() {
       Map.getMeterData()
         .then(function(data) {
-          console.log('Data from getMeterData in mapCtrl: ', data);
+          console.log('Data from getMeterData in MapCtrl: ', data);
           meterData = data;
 
           var mapOptions = {
