@@ -25,8 +25,15 @@ angular
               id: meterData[i].meter_id,
               area: meterData[i].area,
               active: meterData[i].active,
-              street_address: meterData[i].street_address
+              street_address: meterData[i].street_address,
+              event_type: meterData[i].event_type,
+              event_time: meterData[i].event_time
             });
+
+            if(meterData[i].event_type === 'SE') {
+              console.log('<-- # of available meters');
+              marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
+            }
             markers.push(marker);
 
             google.maps.event.addListener(marker, 'click', (function(marker, i) {
@@ -65,6 +72,7 @@ angular
           });
 
           for (var i = 0; i < markers.length; i++) {
+            console.log('<-- total # of meters');
             markers[i].setMap(map);
           }
         })
@@ -73,7 +81,6 @@ angular
         })
     };
   })
-
   .factory('Map', function($http) {
     return {
       getMeterData: getMeterData
