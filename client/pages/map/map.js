@@ -116,7 +116,6 @@ angular
           });
         }
       })(marker, i));
-
     }
 
     for(var i=0; i<markers.length;i++){
