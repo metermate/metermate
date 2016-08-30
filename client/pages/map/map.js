@@ -65,7 +65,7 @@ angular
         infowindow.close();
     });
 
-    var contentString = '<div id="content" style="width:250px;height:300px;"></div>';
+    var contentString = '<div id="content" style="width:200px;height:200px;"></div>';
 
     for(var i=0; i<locations.length;i++){
       marker = new google.maps.Marker({
@@ -79,9 +79,7 @@ angular
 
       markers.push(marker);
 
-      var infowindow = new google.maps.InfoWindow({
-        content: '<p> Meter Status: ' + marker.active + '</p>' + '<p> Meter Area: ' + marker.area + '</p>' + '<p> Meter Address: ' + marker.street_address + '</p>' + contentString
-      });
+
 
       google.maps.event.addListener(marker, 'click', (function(marker, i) {
         return function() {
@@ -116,5 +114,8 @@ angular
 
     for(var i=0; i<markers.length;i++){
       markers[i].setMap($scope.map);
+      var infowindow = new google.maps.InfoWindow({
+        content: '<p> Meter Status: ' + markers[i].active + '</p>' + '<p> Meter Area: ' + markers[i].area + '</p>' + '<p> Meter Address: ' + markers[i].street_address + '</p>' + contentString
+      });
     }
   });
