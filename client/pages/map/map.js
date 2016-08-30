@@ -61,14 +61,57 @@ angular
     $scope.map = new google.maps.Map(document.getElementById("map"), mapProp);
     google.maps.event.addDomListener(window, 'load', mapProp);
 
-    var createMarker = function (eachMeter){
-      markers.push(new google.maps.Marker({
-        position: new google.maps.LatLng(eachMeter.meterlat, eachMeter.meterlong)
-      }));
-    };
+    google.maps.event.addListener(map, 'click', function() {
+        infowindow.close();
+    });
+
+    var contentString = '<div id="content" style="width:250px;height:300px;"></div>';
 
     for(var i=0; i<locations.length;i++){
-      createMarker(locations[i]);
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i].meterlat, locations[i].meterlong),
+        map: map,
+        name: locations[i].name,
+        area: locations[i].area,
+        active: locations[i].active,
+        street_address: locations[i].street_address
+      });
+
+      markers.push(marker);
+
+      var infowindow = new google.maps.InfoWindow({
+        content: '<p> Meter Status: ' + marker.active + '</p>' + '<p> Meter Area: ' + marker.area + '</p>' + '<p> Meter Address: ' + marker.street_address + '</p>' + contentString
+      });
+
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.open(map, marker);
+
+          var pano = null;
+          google.maps.event.addListener(infowindow, 'domready', function () {
+            if (pano != null) {
+              pano.unbind("position");
+              pano.setVisible(false);
+            }
+            pano = new google.maps.StreetViewPanorama(document.getElementById("content"), {
+              navigationControl: true,
+              navigationControlOptions: { style: google.maps.NavigationControlStyle.ANDROID },
+              enableCloseButton: false,
+              addressControl: false,
+              linksControl: false
+            });
+            pano.bindTo("position", marker);
+            pano.setVisible(true);
+          });
+
+          google.maps.event.addListener(infowindow, 'closeclick', function () {
+            pano.unbind("position");
+            pano.setVisible(false);
+            pano = null;
+          });
+        }
+      })(marker, i));
+
     }
 
     for(var i=0; i<markers.length;i++){
