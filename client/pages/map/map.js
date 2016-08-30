@@ -61,14 +61,12 @@ angular
     $scope.map = new google.maps.Map(document.getElementById("map"), mapProp);
     google.maps.event.addDomListener(window, 'load', mapProp);
 
-    google.maps.event.addListener(map, 'click', function() {
-        infowindow.close();
-    });
 
     var contentString = '<div id="content" style="width:200px;height:200px;"></div>';
 
     function bindInfoWindow(marker, map, infowindow, html) {
       marker.addListener('click', function() {
+        console.log('click inside bindinfowindow function');
         infowindow.setContent(html);
         infowindow.open(map, this);
       });
@@ -77,7 +75,7 @@ angular
     for(var i=0; i<locations.length;i++){
       marker = new google.maps.Marker({
         position: new google.maps.LatLng(locations[i].meterlat, locations[i].meterlong),
-        map: map,
+        // map: map,
         name: locations[i].name,
         area: locations[i].area,
         active: locations[i].active,
@@ -87,17 +85,19 @@ angular
       markers.push(marker);
 
       var infowindow = new google.maps.InfoWindow({
-        content: '<p> Meter Status: ' + marker.active + '</p>' + '<p> Meter Area: ' + marker.area + '</p>' + '<p> Meter Address: ' + marker.street_address + '</p>' + contentString
+        // content: '<p> Meter Status: ' + marker.active + '</p>' + '<p> Meter Area: ' + marker.area + '</p>' + '<p> Meter Address: ' + marker.street_address + '</p>' + contentString
       });
 
 
-
       google.maps.event.addListener(marker, 'click', (function(marker, i) {
-        return function() {
+        //if i leave return function () {, marker requires double click. however, if i take it off,
+        //marker opens on first click, but all markers stay open even if i click on another one.
           // infowindow.open(map, marker);
-          bindInfoWindow(marker, map, infowindow, '<p> Meter Status: ' + marker.active + '</p>' + '<p> Meter Area: ' + marker.area + '</p>' + '<p> Meter Address: ' + marker.street_address + '</p>' + contentString); 
+        return function (){
 
+          bindInfoWindow(marker, map, infowindow, '<p> Meter Status: ' + marker.active + '</p>' + '<p> Meter Area: ' + marker.area + '</p>' + '<p> Meter Address: ' + marker.street_address + '</p>' + contentString);
 
+          console.log('clicked inside marker listener');
           var pano = null;
           google.maps.event.addListener(infowindow, 'domready', function () {
             if (pano != null) {
@@ -129,4 +129,8 @@ angular
       markers[i].setMap($scope.map);
 
     }
+
+    google.maps.event.addListener(map, 'click', function() {
+        infowindow.close();
+    });
   });
