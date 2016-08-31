@@ -75,6 +75,17 @@ angular
             console.log('<-- total # of meters');
             markers[i].setMap(map);
           }
+
+          var options = {
+            imagePath: '../../content/images/m',
+            gridSize: 80,
+            maxZoom: 20,
+            zoomOnClick: true,
+            averageCenter: true,
+            minimumClusterSize: 5
+          };
+
+          var markerCluster = new MarkerClusterer(map, markers, options);
         })
         .catch(function(error) {
           console.error('Error retrieving data from getMeterData: ', error);
