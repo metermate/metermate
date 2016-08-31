@@ -9,40 +9,65 @@ angular
           console.log('Data from getMeterData in MapCtrl: ', data);
           meterData = data;
 
+          /* ---------- GOOGLE MAP ---------- */
           var map = new google.maps.Map(document.getElementById('map'), {
-            center: new google.maps.LatLng(34.019325, -118.494809),
+            center: new google.maps.LatLng(34.019325, -118.494809), // sets default center to MKS
             zoom: 19,
             mapTypeId: google.maps.MapTypeId.ROADMAP
           });
+
+          /* ---------- MARKERS ---------- */
           var markers = [];
-          var contentString = '<div id="content" style="width:375px;height:200px;"></div>';
-          var infowindow = new google.maps.InfoWindow();
 
           for (var i = 0; i < meterData.length; i++) {
+            // creates marker for each meter in meterData array
             var marker = new google.maps.Marker({
               position: new google.maps.LatLng(meterData[i].latitude, meterData[i].longitude),
-              animation: google.maps.Animation.DROP,
               id: meterData[i].meter_id,
-              area: meterData[i].area,
               active: meterData[i].active,
+              area: meterData[i].area,
               street_address: meterData[i].street_address,
               event_type: meterData[i].event_type,
               event_time: meterData[i].event_time
             });
 
+            // makes area titlecase (for info window)
+            if(meterData[i].area === 'DOWNTOWN-CBD') {
+              marker.area = 'Downtown-Central Business District';
+            } else {
+              var areaStr = marker.area;
+              marker.area = areaStr.split(' ').map(word => word[0].toUpperCase() + word.substring(1).toLowerCase()).join(' ');
+            }
+
+            // makes approx. address titlecase (for info window)
+            var addressStr = marker.street_address;
+            marker.street_address = addressStr.split(' ').map(word => word[0].toUpperCase() + word.substring(1).toLowerCase()).join(' ');
+
+            // sets green marker if meter is available
             if(meterData[i].event_type === 'SE') {
               console.log('<-- # of available meters');
+              marker.status = 'Available';
               marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
+            } else {
+              marker.status = 'Occupied';
             }
+
             markers.push(marker);
 
+            /* ---------- INFO WINDOW ---------- */
+            var contentString = '<div id="content" style="width:375px;height:200px;"></div>';
+            var infoWindow = new google.maps.InfoWindow();
+
+            // opens info window when user clicks on a marker
             google.maps.event.addListener(marker, 'click', (function(marker, i) {
               return function () {
-                infowindow.setContent('<p> Status: ' + marker.active + '</p>' + '<p> Area: ' + marker.area + '</p>' + '<p> Approx. Address: ' + marker.street_address + '</p>' + contentString);
-                infowindow.open(map, this);
+                // adds meter status, area, and address in info window
+                infoWindow.setContent('<p><strong>Current Status:</strong>&nbsp;&nbsp;' + marker.status + '</p>' + '<p><strong>City Area:</strong>&nbsp;&nbsp;' + marker.area + '</p>' + '<p><strong>Approx. Address:</strong>&nbsp;&nbsp;' + marker.street_address + '</p>' + contentString);
+                infoWindow.open(map, this);
 
+                // adds Google Street View in info window
                 var pano = null;
-                google.maps.event.addListener(infowindow, 'domready', function () {
+                google.maps.event.addListener(infoWindow, 'domready', function () {
                   if (pano != null) {
                     pano.unbind('position');
                     pano.setVisible(false);
@@ -58,7 +83,8 @@ angular
                   pano.setVisible(true);
                 });
 
-                google.maps.event.addListener(infowindow, 'closeclick', function () {
+                // hides Google Street View when info window is closed
+                google.maps.event.addListener(infoWindow, 'closeclick', function () {
                   pano.unbind('position');
                   pano.setVisible(false);
                   pano = null;
@@ -67,20 +93,24 @@ angular
             })(marker, i));
           }
 
+          // closes info window when user clicks marker again
           google.maps.event.addListener(map, 'click', function() {
-            infowindow.close();
+            infoWindow.close();
           });
 
+          // sets markers on map
           for (var i = 0; i < markers.length; i++) {
             console.log('<-- total # of meters');
             markers[i].setMap(map);
           }
 
+          /* ---------- SEARCH BAR ---------- */
           var input = document.getElementById('pac-input');
           var searchBox = new google.maps.places.SearchBox(input);
+
           map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
           map.addListener('bounds_changed', function() {
-              searchBox.setBounds(map.getBounds());
+            searchBox.setBounds(map.getBounds());
           });
           searchBox.addListener('places_changed', function() {
             var places = searchBox.getPlaces();
@@ -89,21 +119,20 @@ angular
             }
             var bounds = new google.maps.LatLngBounds();
             places.forEach(function(place) {
-           if (!place.geometry) {
-             console.log("Returned place contains no geometry");
-             return;
-           }
+              if (!place.geometry) {
+                console.log('Returned place contains no geometry');
+                return;
+              }
+              if (place.geometry.viewport) {
+                bounds.union(place.geometry.viewport); // only geocodes have viewport
+              } else {
+                bounds.extend(place.geometry.location);
+              }
+            });
+            map.fitBounds(bounds);
+          });
 
-           if (place.geometry.viewport) {
-             // Only geocodes have viewport.
-             bounds.union(place.geometry.viewport);
-           } else {
-             bounds.extend(place.geometry.location);
-           }
-         });
-          map.fitBounds(bounds);
-          })
-
+          /* ---------- MARKER CLUSTERER ---------- */
           var options = {
             imagePath: '../../content/images/m',
             gridSize: 80,
