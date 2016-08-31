@@ -78,9 +78,9 @@ angular
 
           var input = document.getElementById('pac-input');
           var searchBox = new google.maps.places.SearchBox(input);
-          $scope.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-          $scope.map.addListener('bounds_changed', function() {
-              searchBox.setBounds($scope.map.getBounds());
+          map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+          map.addListener('bounds_changed', function() {
+              searchBox.setBounds(map.getBounds());
           });
           searchBox.addListener('places_changed', function() {
             var places = searchBox.getPlaces();
@@ -101,7 +101,7 @@ angular
              bounds.extend(place.geometry.location);
            }
          });
-          $scope.map.fitBounds(bounds);
+          map.fitBounds(bounds);
           })
 
           var options = {
