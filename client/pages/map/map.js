@@ -23,7 +23,6 @@ angular
             // creates marker for each meter in meterData array
             var marker = new google.maps.Marker({
               position: new google.maps.LatLng(meterData[i].latitude, meterData[i].longitude),
-              animation: google.maps.Animation.DROP,
               id: meterData[i].meter_id,
               active: meterData[i].active,
               area: meterData[i].area,
@@ -31,13 +30,6 @@ angular
               event_type: meterData[i].event_type,
               event_time: meterData[i].event_time
             });
-
-            // makes meter status user-friendly (for info window)
-            if(meterData[i].active === '1') {
-              marker.active = 'Active';
-            } else if(meterData[i].active === '0') {
-              marker.active = 'Out of Service';
-            }
 
             // makes area titlecase (for info window)
             if(meterData[i].area === 'DOWNTOWN-CBD') {
@@ -54,7 +46,10 @@ angular
             // sets green marker if meter is available
             if(meterData[i].event_type === 'SE') {
               console.log('<-- # of available meters');
+              marker.status = 'Available';
               marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
+            } else {
+              marker.status = 'Occupied';
             }
 
             markers.push(marker);
@@ -67,7 +62,7 @@ angular
             google.maps.event.addListener(marker, 'click', (function(marker, i) {
               return function () {
                 // adds meter status, area, and address in info window
-                infoWindow.setContent('<p><strong>Status:</strong>&nbsp;&nbsp;' + marker.active + '</p>' + '<p><strong>Area:</strong>&nbsp;&nbsp;' + marker.area + '</p>' + '<p><strong>Approx. Address:</strong>&nbsp;&nbsp;' + marker.street_address + '</p>' + contentString);
+                infoWindow.setContent('<p><strong>Current Status:</strong>&nbsp;&nbsp;' + marker.status + '</p>' + '<p><strong>City Area:</strong>&nbsp;&nbsp;' + marker.area + '</p>' + '<p><strong>Approx. Address:</strong>&nbsp;&nbsp;' + marker.street_address + '</p>' + contentString);
                 infoWindow.open(map, this);
 
                 // adds Google Street View in info window
