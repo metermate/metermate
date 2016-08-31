@@ -49,4 +49,34 @@ angular
     for(var i=0; i<markers.length;i++){
       markers[i].setMap($scope.map);
     }
+
+    var input = document.getElementById('pac-input');
+    var searchBox = new google.maps.places.SearchBox(input);
+    $scope.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    $scope.map.addListener('bounds_changed', function() {
+        searchBox.setBounds($scope.map.getBounds());
+    });
+    searchBox.addListener('places_changed', function() {
+      var places = searchBox.getPlaces();
+      if (places.length == 0) {
+        return;
+      }
+      var bounds = new google.maps.LatLngBounds();
+      places.forEach(function(place) {
+     if (!place.geometry) {
+       console.log("Returned place contains no geometry");
+       return;
+     }
+
+     if (place.geometry.viewport) {
+       // Only geocodes have viewport.
+       bounds.union(place.geometry.viewport);
+     } else {
+       bounds.extend(place.geometry.location);
+     }
+   });
+    $scope.map.fitBounds(bounds);
+    })
+
+
   });
