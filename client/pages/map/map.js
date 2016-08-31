@@ -1,6 +1,6 @@
 angular
   .module('metermate.map', [])
-  .controller('MapCtrl', function($scope, $window, Map) {
+  .controller('MapCtrl', function($scope, $window, Map, FindCurrentLocation) {
     var meterData = [];
 
     $window.onload = function() {
@@ -143,6 +143,13 @@ angular
           };
 
           var markerCluster = new MarkerClusterer(map, markers, options);
+
+          var centerControlDiv = document.createElement('div');
+          centerControlDiv.innerHTML = '<button id="locateMe">Find Your Location</button>';
+          centerControlDiv.onclick = function() {
+            FindCurrentLocation.centerMap(map);
+          }
+          map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv, map);
         })
         .catch(function(error) {
           console.error('Error retrieving data from getMeterData: ', error);
@@ -166,4 +173,29 @@ angular
           console.error(error);
         });
     };
+  })
+  .factory('FindCurrentLocation', function(){
+    return {
+      centerMap: centerMap
+    };
+
+    function centerMap(map) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          }
+          map.setCenter(pos); //Centers map on current location.
+          var currentLocationPin = new google.maps.Marker({ // Creates a pin at current location
+            position: new google.maps.LatLng(pos.lat, pos.lng), // Sets position prop to geolocation
+            animation: google.maps.Animation.DROP
+            // icon: '../../content/images/',
+          });
+          currentLocationPin.setMap(map); // Adds a pin to your current location
+        })
+      } else {
+        error('Geo Location is not supported');
+      }
+    }
 });
