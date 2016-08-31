@@ -23,22 +23,43 @@ angular
               position: new google.maps.LatLng(meterData[i].latitude, meterData[i].longitude),
               animation: google.maps.Animation.DROP,
               id: meterData[i].meter_id,
-              area: meterData[i].area,
               active: meterData[i].active,
+              area: meterData[i].area,
               street_address: meterData[i].street_address,
               event_type: meterData[i].event_type,
               event_time: meterData[i].event_time
             });
 
+            // makes meter status user-friendly (info window)
+            if(meterData[i].active === '1') {
+              marker.active = 'Active';
+            } else if(meterData[i].active === '0') {
+              marker.active = 'Out of Service';
+            }
+
+            // makes area titlecase (info window)
+            if(meterData[i].area === 'DOWNTOWN-CBD') {
+              marker.area = 'Downtown-Central Business District';
+            } else {
+              var areaStr = marker.area;
+              marker.area = areaStr.split(' ').map(word => word[0].toUpperCase() + word.substring(1).toLowerCase()).join(' ');
+            }
+
+            // makes approx. address titlecase (info window)
+            var addressStr = marker.street_address;
+            marker.street_address = addressStr.split(' ').map(word => word[0].toUpperCase() + word.substring(1).toLowerCase()).join(' ');
+
+            // sets green marker if meter is available
             if(meterData[i].event_type === 'SE') {
               console.log('<-- # of available meters');
               marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
             }
+
             markers.push(marker);
 
             google.maps.event.addListener(marker, 'click', (function(marker, i) {
               return function () {
-                infowindow.setContent('<p> Status: ' + marker.active + '</p>' + '<p> Area: ' + marker.area + '</p>' + '<p> Approx. Address: ' + marker.street_address + '</p>' + contentString);
+                infowindow.setContent('<p><strong>Status:</strong>&nbsp;&nbsp;' + marker.active + '</p>' + '<p><strong>Area:</strong>&nbsp;&nbsp;' + marker.area + '</p>' + '<p><strong>Approx. Address:</strong>&nbsp;&nbsp;' + marker.street_address + '</p>' + contentString);
                 infowindow.open(map, this);
 
                 var pano = null;
