@@ -64,7 +64,8 @@ html, body {
   width: 10px;
 }
 
-/* ---------- SEARCH BAR ---------- */
+/* ---------- FIND MY LOCATION BUTTON ---------- */
+>>>>>>> feature/findMyLocation
  #locateMe {
    border: 2px solid #fff;
    border-radius: 3px;
