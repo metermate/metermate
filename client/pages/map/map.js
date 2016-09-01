@@ -144,6 +144,8 @@ angular
 
           var markerCluster = new MarkerClusterer(map, markers, options);
 
+          /* ---------- FIND MY LOCATION ---------- */
+
           var centerControlDiv = document.createElement('div');
           centerControlDiv.innerHTML = '<button id="locateMe">Find Your Location</button>';
           centerControlDiv.onclick = function() {
