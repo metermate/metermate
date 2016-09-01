@@ -19,11 +19,10 @@ angular
           /* ---------- MARKERS ---------- */
           var markers = [];
           var meterIcon = {
-            path: 'M-276.6,355.8c-8,0-14.4,6.5-14.4,14.4c0,4.8,2.4,9.1,6,11.7c1.3,10.2,3.9,13.7,3.9,13.7c0,0.4,0.3,0.4,0.6,0.4h2.1v39.3c-1.7,0.1-3.3,0.4-3.3,0.8c0,0.5,2.3,0.9,4.9,0.9c2.6,0,4.9-0.4,4.9-0.9c-0.1-0.4-1.5-0.7-3.5-0.8V396h2.4c0.3,0,0.6-0.1,0.6-0.4c0,0,2.6-3.4,3.9-13.6c3.7-2.6,6.2-6.9,6.2-11.8C-262.3,362.3-268.7,355.9-276.6,355.8zM-275.4,378.8c0,0.8-0.7,1.4-1.5,1.4s-1.5-0.6-1.5-1.4v-5.6c0-0.8,0.7-1.4,1.5-1.4s1.5,0.6,1.5,1.4V378.8zM-268,367.6c-1.2-3.7-4.7-6.6-8.7-6.6c-4.2,0-7.7,2.8-8.7,6.6c-1.1-0.3-2-0.6-2.7-0.9c1.4-5,6-8.7,11.5-8.7c5.4,0,10,3.6,11.4,8.6C-265.9,366.9-266.8,367.2-268,367.6z',
-            fillOpacity: 0.8,
-            scale: 0.65,
-            strokeColor: '#425765',
-            strokeWeight: 1
+            size: new google.maps.Size(18, 51),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(9, 51),
+            scaledSize: new google.maps.Size(18, 51)
           };
 
           for (var i = 0; i < meterData.length; i++) {
@@ -53,11 +52,11 @@ angular
             // shows green meter if available, red meter if occupied
             if(meterData[i].event_type === 'SE') {
               console.log('<-- # of available meters');
-              meterIcon.fillColor = '#10D492';
+              meterIcon.url = '../../content/images/meter_icon_green.png';
               marker.setIcon(meterIcon);
               marker.status = 'Available';
             } else {
-              meterIcon.fillColor = '#FF6666';
+              meterIcon.url = '../../content/images/meter_icon_red.png';
               marker.setIcon(meterIcon);
               marker.status = 'Occupied';
             }
