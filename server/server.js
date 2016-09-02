@@ -77,7 +77,8 @@ app.get('/api/meter-events', function(req, res) {
 });
 
 app.get('/api/get-meter-data', function(req, res) {
-  dbConnection.query('SELECT * FROM meters WHERE event_type IN ("SS","SE") AND latitude != 34.01945 AND longitude != 0', function(err, data) {
+  var boundaries = [Number(req.query.neLat), Number(req.query.swLat), Number(req.query.neLng), Number(req.query.swLng)];
+  dbConnection.query('SELECT * FROM meters WHERE event_type IN ("SS", "SE") AND latitude <= ? AND latitude >= ? AND longitude <= ? AND longitude >= ?', boundaries, function(err, data) {
     if (err) {
       console.error('Error retrieving data from meterDB: ', err);
     } else {
