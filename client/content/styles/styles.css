@@ -73,3 +73,14 @@ html, body {
  }
 
  /* END */
+.jumbotron {
+  text-align: center;
+  background-image: image("https://scontent-lax3-1.xx.fbcdn.net/t31.0-8/12829059_10154194138383296_6459298189364513905_o.jpg");
+}
+ /* ABOUT PAGE */
+
+.engineers {
+
+
+}
+ /* END */

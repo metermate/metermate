@@ -52,7 +52,7 @@ app.get('/api/meter-locations', function(req, res) {
 
 app.get('/api/meter-events', function(req, res) {
   var currDate = new Date();
-  currDate.setHours(currDate.getHours() - 2.5);
+  currDate.setHours(currDate.getHours() 2);
   currDate.toISOString();
   currDate = JSON.stringify(currDate);
   var parsedDate = currDate.replace(/[-:.]/g, "");
