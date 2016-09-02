@@ -2,22 +2,41 @@ angular
   .module('metermate.map', [])
   .controller('MapCtrl', function($scope, $window, Map, FindCurrentLocation) {
     var meterData = [];
+    var areMetersLoaded = false;
+    var markerCluster;
 
     $window.onload = function() {
-      Map.getMeterData()
+
+      /* ---------- GOOGLE MAP ---------- */
+      //creates the map onload
+      var map = new google.maps.Map(document.getElementById('map'), {
+        center: new google.maps.LatLng(34.019325, -118.494809), // sets default center to MKS
+        zoom: 20,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      });
+
+      //runs a function when the map becomes idle after zooming or moving around
+      //this function gets the Southwest and Northeast coordinates of the current window view
+      google.maps.event.addListener(map, 'idle', function() {
+          bounds = map.getBounds();
+          sw = bounds.getSouthWest();
+          ne = bounds.getNorthEast();
+          var param = {
+            swLat: sw.lat(),
+            swLng: sw.lng(),
+            neLat: ne.lat(),
+            neLng: ne.lng()
+          }
+
+      Map.getMeterData(param)
         .then(function(data) {
           console.log('Data from getMeterData in MapCtrl: ', data);
+          meterData = [];
           meterData = data;
-
-          /* ---------- GOOGLE MAP ---------- */
-          var map = new google.maps.Map(document.getElementById('map'), {
-            center: new google.maps.LatLng(34.019325, -118.494809), // sets default center to MKS
-            zoom: 20,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-          });
 
           /* ---------- MARKERS ---------- */
           var markers = [];
+
           var meterIcon = {
             size: new google.maps.Size(18, 51),
             origin: new google.maps.Point(0, 0),
@@ -118,6 +137,26 @@ angular
             markers[i].setMap(map);
           }
 
+          /* ---------- MARKER CLUSTERER ---------- */
+          var options = {
+            imagePath: '../../content/images/m',
+            gridSize: 80,
+            maxZoom: 20,
+            minClusterZoom: 14,
+            zoomOnClick: true,
+            averageCenter: true,
+            minimumClusterSize: 5
+          };
+
+         if(markerCluster !== undefined) {
+           markerCluster.clearMarkers();
+         }
+
+         markerCluster = new MarkerClusterer(map, markers, options);
+
+          //this if statement prevents the Search Bar and Find Your Location functions to run constantly with each map change event
+        if(!areMetersLoaded) {
+
           /* ---------- SEARCH BAR ---------- */
           var input = document.getElementById('pac-input');
           var searchBox = new google.maps.places.SearchBox(input);
@@ -146,17 +185,6 @@ angular
             map.fitBounds(bounds);
           });
 
-          /* ---------- MARKER CLUSTERER ---------- */
-          var options = {
-            imagePath: '../../content/images/m',
-            gridSize: 80,
-            maxZoom: 20,
-            zoomOnClick: true,
-            averageCenter: true,
-            minimumClusterSize: 5
-          };
-
-          var markerCluster = new MarkerClusterer(map, markers, options);
 
           /* ---------- FIND MY LOCATION ---------- */
 
@@ -166,10 +194,15 @@ angular
             FindCurrentLocation.centerMap(map);
           }
           map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv, map);
+        }
+
+          areMetersLoaded = true;
+
         })
         .catch(function(error) {
           console.error('Error retrieving data from getMeterData: ', error);
         })
+      });
     };
   })
   .factory('Map', function($http) {
@@ -177,10 +210,16 @@ angular
       getMeterData: getMeterData
     };
 
-    function getMeterData() {
+    function getMeterData(param) {
       return $http({
         method: 'GET',
-        url: '/api/get-meter-data'
+        url: '/api/get-meter-data',
+        params: {
+          swLat: param.swLat,
+          swLng: param.swLng,
+          neLat: param.neLat,
+          neLng: param.neLng
+        }
       })
         .then(function(response) {
           return response.data;
@@ -203,12 +242,12 @@ angular
             lng: position.coords.longitude
           }
           map.setCenter(pos); //Centers map on current location.
-          var currentLocationPin = new google.maps.Marker({ // Creates a pin at current location
-            position: new google.maps.LatLng(pos.lat, pos.lng), // Sets position prop to geolocation
-            animation: google.maps.Animation.DROP
-            // icon: '../../content/images/',
-          });
-          currentLocationPin.setMap(map); // Adds a pin to your current location
+          // var currentLocationPin = new google.maps.Marker({ // Creates a pin at current location
+          //   position: new google.maps.LatLng(pos.lat, pos.lng), // Sets position prop to geolocation
+          //   animation: google.maps.Animation.DROP
+          //   // icon: '../../content/images/',
+          // });
+          // currentLocationPin.setMap(map); // Adds a pin to your current location
         })
       } else {
         error('Geo Location is not supported');
