@@ -135,9 +135,20 @@ angular
             markers[i].setMap(map);
           }
 
-          //this if statement prevents the Search Bar and Find Your Location functions to run constantly with each map change event
-          if(!areMetersLoaded) {
+          /* ---------- MARKER CLUSTERER ---------- */
+          var options = {
+            imagePath: '../../content/images/m',
+            gridSize: 80,
+            maxZoom: 20,
+            zoomOnClick: true,
+            averageCenter: true,
+            minimumClusterSize: 5
+          };
 
+          var markerCluster = new MarkerClusterer(map, markers, options);
+
+          //this if statement prevents the Search Bar and Find Your Location functions to run constantly with each map change event
+        if(!areMetersLoaded) {
 
           /* ---------- SEARCH BAR ---------- */
           var input = document.getElementById('pac-input');
@@ -167,17 +178,6 @@ angular
             map.fitBounds(bounds);
           });
 
-          /* ---------- MARKER CLUSTERER ---------- */
-          var options = {
-            imagePath: '../../content/images/m',
-            gridSize: 80,
-            maxZoom: 20,
-            zoomOnClick: true,
-            averageCenter: true,
-            minimumClusterSize: 5
-          };
-
-          var markerCluster = new MarkerClusterer(map, markers, options);
 
           /* ---------- FIND MY LOCATION ---------- */
 
