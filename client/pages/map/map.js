@@ -12,12 +12,18 @@ angular
           /* ---------- GOOGLE MAP ---------- */
           var map = new google.maps.Map(document.getElementById('map'), {
             center: new google.maps.LatLng(34.019325, -118.494809), // sets default center to MKS
-            zoom: 19,
+            zoom: 20,
             mapTypeId: google.maps.MapTypeId.ROADMAP
           });
 
           /* ---------- MARKERS ---------- */
           var markers = [];
+          var meterIcon = {
+            size: new google.maps.Size(18, 51),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(9, 51),
+            scaledSize: new google.maps.Size(18, 51)
+          };
 
           for (var i = 0; i < meterData.length; i++) {
             // creates marker for each meter in meterData array
@@ -43,47 +49,55 @@ angular
             var addressStr = marker.street_address;
             marker.street_address = addressStr.split(' ').map(word => word[0].toUpperCase() + word.substring(1).toLowerCase()).join(' ');
 
-            // sets green marker if meter is available
+            // shows green meter if available, red meter if occupied
             if(meterData[i].event_type === 'SE') {
               console.log('<-- # of available meters');
+              meterIcon.url = '../../content/images/meter_icon_green.png';
+              marker.setIcon(meterIcon);
               marker.status = 'Available';
-              marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
             } else {
+              meterIcon.url = '../../content/images/meter_icon_red.png';
+              marker.setIcon(meterIcon);
               marker.status = 'Occupied';
             }
 
             markers.push(marker);
 
             /* ---------- INFO WINDOW ---------- */
-            var contentString = '<div id="content" style="width:375px;height:200px;"></div>';
             var infoWindow = new google.maps.InfoWindow();
+            var streetViewBox = '<div id="street-view-box" style="width:375px;height:200px;"></div>';
 
             // opens info window when user clicks on a marker
             google.maps.event.addListener(marker, 'click', (function(marker, i) {
               return function () {
                 // adds meter status, area, and address in info window
-                infoWindow.setContent('<p><strong>Current Status:</strong>&nbsp;&nbsp;' + marker.status + '</p>' + '<p><strong>City Area:</strong>&nbsp;&nbsp;' + marker.area + '</p>' + '<p><strong>Approx. Address:</strong>&nbsp;&nbsp;' + marker.street_address + '</p>' + contentString);
+                infoWindow.setContent(
+                  '<p><strong>Current Status:</strong>&nbsp;&nbsp;' + marker.status + '</p>' + '<p><strong>City Area:</strong>&nbsp;&nbsp;' + marker.area + '</p>' + '<p><strong>Approx. Address:</strong>&nbsp;&nbsp;' + marker.street_address + '</p>' + streetViewBox
+                );
                 infoWindow.open(map, this);
 
-                // adds Google Street View in info window
+                // adds street view box in info window
                 var pano = null;
                 google.maps.event.addListener(infoWindow, 'domready', function () {
                   if (pano != null) {
                     pano.unbind('position');
                     pano.setVisible(false);
                   }
-                  pano = new google.maps.StreetViewPanorama(document.getElementById('content'), {
+                  pano = new google.maps.StreetViewPanorama(document.getElementById('street-view-box'), {
                     navigationControl: true,
                     navigationControlOptions: { style: google.maps.NavigationControlStyle.ANDROID },
                     enableCloseButton: false,
                     addressControl: false,
                     linksControl: false
                   });
-                  pano.bindTo('position', marker);
+
+                  var pin = new google.maps.MVCObject();
+                  pin.set('position', marker.getPosition());
+                  pano.bindTo('position', pin);
                   pano.setVisible(true);
                 });
 
-                // hides Google Street View when info window is closed
+                // hides street view box when info window is closed
                 google.maps.event.addListener(infoWindow, 'closeclick', function () {
                   pano.unbind('position');
                   pano.setVisible(false);
