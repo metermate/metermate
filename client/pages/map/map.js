@@ -3,6 +3,7 @@ angular
   .controller('MapCtrl', function($scope, $window, Map, FindCurrentLocation) {
     var meterData = [];
     var areMetersLoaded = false;
+    var markerCluster;
 
     $window.onload = function() {
 
@@ -146,7 +147,11 @@ angular
             averageCenter: true,
             minimumClusterSize: 5
           };
-          var markerCluster = new MarkerClusterer(map, markers, options);
+
+         if(markerCluster !== undefined) {
+           markerCluster.clearMarkers();
+         }
+         markerCluster = new MarkerClusterer(map, markers, options);
 
           //this if statement prevents the Search Bar and Find Your Location functions to run constantly with each map change event
         if(!areMetersLoaded) {
