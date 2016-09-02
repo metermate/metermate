@@ -2,6 +2,7 @@ angular
   .module('metermate.map', [])
   .controller('MapCtrl', function($scope, $window, Map, FindCurrentLocation) {
     var meterData = [];
+    console.log('meterData: ', meterData);
     var areMetersLoaded = false;
 
     $window.onload = function() {
@@ -33,8 +34,12 @@ angular
           meterData = data;
 
 
+
+
           /* ---------- MARKERS ---------- */
           var markers = [];
+          console.log('markers: ', markers);
+
           var meterIcon = {
             size: new google.maps.Size(18, 51),
             origin: new google.maps.Point(0, 0),
@@ -134,7 +139,6 @@ angular
             console.log('<-- total # of meters');
             markers[i].setMap(map);
           }
-
           /* ---------- MARKER CLUSTERER ---------- */
           var options = {
             imagePath: '../../content/images/m',
@@ -144,8 +148,20 @@ angular
             averageCenter: true,
             minimumClusterSize: 5
           };
-
           var markerCluster = new MarkerClusterer(map, markers, options);
+
+          
+
+
+        //   if(markers.length > 0){
+        //
+        //     markerCluster.addMarkers(markers);
+        //   }
+        // } else {
+        //
+        //     markerCluster = new MarkerClusterer(map, markers, options);
+        //   }
+
 
           //this if statement prevents the Search Bar and Find Your Location functions to run constantly with each map change event
         if(!areMetersLoaded) {
