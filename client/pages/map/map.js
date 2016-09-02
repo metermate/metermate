@@ -148,9 +148,7 @@ angular
             minimumClusterSize: 5
           };
 
-         console.log("markerCluster before reset: ", markerCluster)
          if(markerCluster !== undefined) {
-           console.log("Clearing Markers!")
            markerCluster.clearMarkers();
          }
 
