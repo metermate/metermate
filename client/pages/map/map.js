@@ -14,6 +14,9 @@ angular
         mapTypeId: google.maps.MapTypeId.ROADMAP
       });
 
+
+
+
       //runs a function when the map becomes idle after zooming or moving around
       //this function gets the Southwest and Northeast coordinates of the current window view
       google.maps.event.addListener(map, 'idle', function() {
@@ -31,6 +34,18 @@ angular
         .then(function(data) {
           console.log('Data from getMeterData in MapCtrl: ', data);
           meterData = data;
+
+          /* ---------- MARKER CLUSTERER ---------- */
+          var options = {
+            imagePath: '../../content/images/m',
+            gridSize: 80,
+            maxZoom: 20,
+            minClusterZoom: 14,
+            zoomOnClick: true,
+            averageCenter: true,
+            minimumClusterSize: 5
+          };
+          var markerCluster = new MarkerClusterer(map, [], options);
 
           /* ---------- MARKERS ---------- */
           var markers = [];
@@ -135,17 +150,10 @@ angular
             console.log('<-- total # of meters');
             markers[i].setMap(map);
           }
-          /* ---------- MARKER CLUSTERER ---------- */
-          var options = {
-            imagePath: '../../content/images/m',
-            gridSize: 80,
-            maxZoom: 20,
-            minClusterZoom: 14,
-            zoomOnClick: true,
-            averageCenter: true,
-            minimumClusterSize: 5
-          };
-          var markerCluster = new MarkerClusterer(map, markers, options);
+
+          markerCluster.resetViewport();
+          markerCluster.redraw();
+          markerCluster = new MarkerClusterer(map, markers, options);
 
 
           //this if statement prevents the Search Bar and Find Your Location functions to run constantly with each map change event
