@@ -2,7 +2,6 @@ angular
   .module('metermate.map', [])
   .controller('MapCtrl', function($scope, $window, Map, FindCurrentLocation) {
     var meterData = [];
-    console.log('meterData: ', meterData);
     var areMetersLoaded = false;
 
     $window.onload = function() {
@@ -32,9 +31,6 @@ angular
         .then(function(data) {
           console.log('Data from getMeterData in MapCtrl: ', data);
           meterData = data;
-
-
-
 
           /* ---------- MARKERS ---------- */
           var markers = [];
@@ -144,23 +140,12 @@ angular
             imagePath: '../../content/images/m',
             gridSize: 80,
             maxZoom: 20,
+            minClusterZoom: 14,
             zoomOnClick: true,
             averageCenter: true,
             minimumClusterSize: 5
           };
           var markerCluster = new MarkerClusterer(map, markers, options);
-
-          
-
-
-        //   if(markers.length > 0){
-        //
-        //     markerCluster.addMarkers(markers);
-        //   }
-        // } else {
-        //
-        //     markerCluster = new MarkerClusterer(map, markers, options);
-        //   }
 
 
           //this if statement prevents the Search Bar and Find Your Location functions to run constantly with each map change event
