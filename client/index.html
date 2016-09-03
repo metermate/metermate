@@ -2,20 +2,66 @@
 <html ng-app="metermate">
   <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>MeterMate</title>
-    <link rel="stylesheet" href="./content/styles/styles.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <script src="https://use.fontawesome.com/8b40df3c6a.js"></script>
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Tangerine">
+
+    <!-- CSS -->
+    <link href="./lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./content/css/styles.css" rel="stylesheet">
+    <link href="./lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="./lib/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+
+    <!-- Google Maps API -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEibwDGNgPHeZMtW2UqRrSIAChgdpQfec&libraries=places"></script>
   </head>
   <body>
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+          </button>
+          <a class="navbar-brand page-scroll" href="#page-top">METERMATE</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a class="page-scroll" href="#features">Features</a>
+            </li>
+            <li>
+              <a class="page-scroll" href="#how-it-works">How It Works</a>
+            </li>
+            <li>
+              <a class="page-scroll" href="#team">Our Team</a>
+            </li>
+            <li>
+              <a class="page-scroll" href="#tools">Tools</a>
+            </li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container-fluid -->
+    </nav>
+
+    <!-- Map View -->
     <div ui-view></div>
 
     <!-- lib -->
     <script src="./lib/angular/angular.min.js"></script>
     <script src="./lib/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="./lib/js-marker-clusterer/src/markerclusterer.js"></script>
+    <script src="./lib/jquery/dist/jquery.min.js"></script>
+    <script src="./lib/jquery.easing/js/jquery.easing.min.js"></script>
+    <script src="./lib/bootstrap/dist/js/bootstrap.min.js"></script>
 
     <!-- app -->
     <script src="./pages/home/home.js"></script>
