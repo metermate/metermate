@@ -1,15 +1,20 @@
-<div ng-controller='AboutCtrl'>
-
-  <!-- Engineers -->
+<div ng-controller='AboutCtrl' class="about">
   <div class="engineers" ng-repeat="person in engineers">
-    <div class="row">
+    <div class="flex-container">
       <div class="col-sm-6 col-md-4">
-        <div class="thumbnail">
-          <img src="..." alt="...">
+        <div class="thumbnail engineer">
+          <img class="image" ng-src="http://www.sunflowerwellnessretreat.com/wp-content/uploads/2014/08/Sunflower-Wellness.png">
+          <!-- Change the ng-src when headshots come in -->
           <div class="caption">
             <h3>{{person.name}}</h3>
             <p>{{person.description}}</p>
-            <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+            <p>
+              <a ng-href="{{person.linkedIn}}" class="btn btn-social-icon btn-linkedin fa-lg">
+              <span class="fa fa-linkedin"></span></a>
+              <a ng-href="{{person.github}}" class="btn btn-social-icon btn-github fa-lg">
+              <span class="fa fa-github"></span>
+            </a>
+        </p>
           </div>
         </div>
       </div>
