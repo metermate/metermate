@@ -1,7 +1,25 @@
 <div ng-controller='HomeCtrl'>
-  <h1>Home</h1>
-  <p>{{testing}}</p>
-  <form ng-submit='searchLocation(location)'>
-    <input type="text" placeholder="enter your location" ng-model='location'>
-  </form>
+  <!-- Landing Page -->
+  <header>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-7">
+          <div class="header-content">
+            <div class="header-content-inner">
+              <h1>
+                <strong>Stop circling around.</strong><br />
+                MeterMate is the easiest way to <br /> find parking in Santa Monica.
+              </h1>
+              <div class="search-bar">
+                <form>
+                  <input type="search" placeholder="Enter a place or address" />
+                </form>
+                <a href="#/map" class="btn btn-outline btn-xl search-btn"><p>Search Map</p></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
 </div>
