@@ -71,11 +71,11 @@ angular
             // shows green meter if available, red meter if occupied
             if(meterData[i].event_type === 'SE') {
               console.log('<-- # of available meters');
-              meterIcon.url = '../../content/images/meter_icon_green.png';
+              meterIcon.url = '../../content/img/meter-icons/meter-icon-green.png';
               marker.setIcon(meterIcon);
               marker.status = 'Available';
             } else {
-              meterIcon.url = '../../content/images/meter_icon_red.png';
+              meterIcon.url = '../../content/img/meter-icons/meter-icon-red.png';
               marker.setIcon(meterIcon);
               marker.status = 'Occupied';
             }
@@ -139,7 +139,7 @@ angular
 
           /* ---------- MARKER CLUSTERER ---------- */
           var options = {
-            imagePath: '../../content/images/m',
+            imagePath: '../../content/img/clusters/m',
             gridSize: 80,
             maxZoom: 20,
             minClusterZoom: 14,
