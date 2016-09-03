@@ -82,7 +82,39 @@ html, body {
    outline: none;
  }
 
+
  #locateMe:hover {
    background-color: rgb(235, 235, 235);
    border: 2px solid rgb(235, 235, 235);
  }
+
+
+
+ /* ABOUT FEATURE */
+
+.image {
+  width: 242px;
+  height: 200px;
+  padding-top: 10px;
+}
+
+.about {
+  text-align: center;
+  font-family: Helvetica Neue;
+}
+
+.btn-github {
+  background-color: #444444;
+  color: white;
+  width: 40px;
+  height: 32px;
+}
+
+.btn-linkedin {
+  background-color: #007BB6;
+  color: white;
+  width: 40px;
+  height: 32px;
+}
+
+ /* END */
