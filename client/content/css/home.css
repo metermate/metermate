@@ -19,7 +19,7 @@ a {
   -webkit-transition: all 0.35s;
   -moz-transition: all 0.35s;
   transition: all 0.35s;
-  color: #fdcc52;
+  color: #fcbd20;
 }
 a:hover,
 a:focus {
@@ -177,41 +177,6 @@ footer ul li a.active {
 .no-gutter > [class*='col-'] {
   padding-right: 0;
   padding-left: 0;
-}
-.search-btn {
-  background-color: #fdcc52;
-  border-color: #fdcc52;
-  border: 1px solid;
-  font-size: 14px;
-  margin-top: 20px;
-}
-.search-btn p {
-  color: white;
-  margin-bottom: 0;
-}
-.btn-outline.search-btn:hover,
-.btn-outline.search-btn:focus,
-.btn-outline.search-btn:active,
-.btn-outline.search-btn.active {
-  color: white;
-  background-color: #66CC75;
-  border-color: #66CC75;
-}
-.view-github {
-  color: white;
-  background-color: black;
-  border-color: black;
-  border: 1px solid;
-  margin-top: 50px;
-  margin-bottom: 10px;
-}
-.btn-outline.view-github:hover,
-.btn-outline.view-github:focus,
-.btn-outline.view-github:active,
-.btn-outline.view-github.active {
-  color: white;
-  background-color: #fdcc52;
-  border-color: #fdcc52;
 }
 .btn {
   font-family: 'Lato', 'Helvetica', 'Arial', 'sans-serif';

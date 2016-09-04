@@ -29,3 +29,19 @@ section.tools img {
     display: inline;
   }
 }
+.view-github {
+  color: white;
+  background-color: black;
+  border-color: black;
+  border: 1px solid;
+  margin-top: 50px;
+  margin-bottom: 10px;
+}
+.btn-outline.view-github:hover,
+.btn-outline.view-github:focus,
+.btn-outline.view-github:active,
+.btn-outline.view-github.active {
+  color: white;
+  background-color: #fdcc52;
+  border-color: #fdcc52;
+}

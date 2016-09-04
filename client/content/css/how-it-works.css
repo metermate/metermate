@@ -14,12 +14,12 @@ section.how-it-works .screenshot {
 }
 section.how-it-works .samo-api-section {
   display: inline-block;
-  width: 520px;
+  width: 540px;
 }
 section.how-it-works .google-maps-api-section {
   display: inline-block;
-  width: 520px;
-  margin-top: 20px;
+  width: 540px;
+  margin-top: 10px;
 }
 section.how-it-works h2 {
   margin-top: 0;
