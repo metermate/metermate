@@ -1,7 +1,242 @@
 <div ng-controller='HomeCtrl'>
-  <h1>Home</h1>
-  <p>{{testing}}</p>
-  <form ng-submit='searchLocation(location)'>
-    <input type="text" placeholder="enter your location" ng-model='location'>
-  </form>
+  <!-- Landing Page -->
+  <header>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-7">
+          <div class="header-content">
+            <div class="header-content-inner">
+              <h1>
+                <strong>Stop circling around.</strong><br />
+                MeterMate is the easiest way to <br /> find parking in Santa Monica.
+              </h1>
+              <div class="search-bar">
+                <form>
+                  <input type="search" placeholder="Enter a place or address" />
+                </form>
+                <a href="#/map" class="btn btn-outline btn-xl search-btn"><p>Search Map</p></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Features Section -->
+  <section id="features" class="features bg-primary">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <div class="section-heading">
+            <h2>Finding parking doesn't have to suck.</h2>
+            <p class="section-heading-text">Search for an open spot, park your car, and get on with your day.</p>
+            <hr>
+          </div>
+        </div>
+      </div>
+      <div class="row text-center">
+        <div class="col-md-4">
+          <span class="fa-stack fa-5x">
+            <i class="fa fa-circle fa-stack-2x feature-icon"></i>
+            <i class="fa fa-search fa-stack-1x fa-inverse"></i>
+          </span>
+          <h4 class="feature-heading">Search Your Destination</h4>
+          <p class="feature-text">You've got places to go, people to see. We know. Just tell us where you want to go and we'll show you the closest parking meters in the area.</p>
+        </div>
+        <div class="col-md-4">
+          <span class="fa-stack fa-5x">
+            <i class="fa fa-circle fa-stack-2x feature-icon"></i>
+            <i class="fa fa-car fa-stack-1x fa-inverse"></i>
+          </span>
+          <h4 class="feature-heading">Find an Available Meter</h4>
+          <p class="feature-text">We do all the hard work for you. If the meter icon is red, sorry, someone beat you to it. But if it's green, it's available and yours for the taking!</p>
+        </div>
+        <div class="col-md-4">
+          <span class="fa-stack fa-5x">
+            <i class="fa fa-circle fa-stack-2x feature-icon"></i>
+            <i class="fa fa-street-view fa-stack-1x fa-inverse"></i>
+          </span>
+          <h4 class="feature-heading">Check Street View</h4>
+          <p class="feature-text">Maybe you're a curious cat, a visual person, or just really bad with street names. Take a peek at the street ahead of time and find your bearings.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section id="how-it-works" class="how-it-works text-center">
+    <div class="container">
+      <img class="screenshot img-responsive" src="../../content/img/home/map-screenshot.png">
+
+      <h2 class="section-heading">How MeterMate Works</h2>
+
+      <div class="samo-api-section">
+        <img class="logo img-responsive" src="../../content/img/logos/samo-parking-api.png">
+        <p class="section-heading-text">The City of Santa Monica provides detailed information about its metered parking spaces through its <a href="https://parking.api.smgov.net/">free parking data API</a>, including latitude &amp; longitude coordinates, sensor events indicating whether a vehicle has pulled in or pulled out of a metered space, and the date and time such events were recorded.</p>
+      </div>
+
+      <div class="google-maps-api-section">
+        <img class="logo img-responsive" src="../../content/img/logos/google-maps-api.png">
+        <p class="section-heading-text">It's when we integrate this valuable parking data with Google's powerful <a href="https://developers.google.com/maps/documentation/javascript/">Google Maps JavaScript API</a> that the real magic happens. Using a RESTful API and cutting-edge JavaScript technologies, we parse through the data, plot the meters' precise locations on the map, and display the information most relevant to you in a user-friendly way.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section id="team" class="team">
+    <div class="team-content">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading">Meet the Team</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="team-member">
+              <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+                <div class="flipper">
+                  <div class="front">
+                    <img src="../../content/img/team/samchi.png" class="img-responsive img-circle">
+                  </div>
+                  <div class="back">
+                    <div class="gif-img">
+                      <img src="../../content/img/team/samchi-camera.gif" class="img-responsive img-circle">
+                    </div>
+                    <div class="gif-text">
+                      <p>Loves his DSLR, roadtrips, <br /> Spotify playlists, and <br /> all things design</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h4>Sam Chi</h4>
+              <p class="team-role">Product Owner / Full Stack Developer</p>
+              <ul class="list-inline social-buttons">
+                <li><a href="https://github.com/samsjchi"><i class="fa fa-github"></i></a>
+                </li>
+                <li><a href="https://www.facebook.com/samsjchi"><i class="fa fa-facebook"></i></a>
+                </li>
+                <li><a href="https://www.linkedin.com/in/samuelsjchi"><i class="fa fa-linkedin"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="team-member">
+              <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+                <div class="flipper">
+                  <div class="front">
+                    <img src="../../content/img/team/blank.png" class="img-responsive img-circle">
+                  </div>
+                  <div class="back">
+                    <div class="gif-img">
+                      <img src="../../content/img/team/christianborja-beer.gif" class="img-responsive img-circle">
+                    </div>
+                    <div class="gif-text">
+                      <p>Loves his DSLR, roadtrips, <br /> Spotify playlists, and <br /> all things design</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h4>Christian Borja</h4>
+              <p class="team-role">Scrum Master / Full Stack Developer</p>
+              <ul class="list-inline social-buttons">
+                <li><a href="https://github.com/cborjah"><i class="fa fa-github"></i></a>
+                </li>
+                <li><a href="https://www.facebook.com/cpborja7"><i class="fa fa-facebook"></i></a>
+                </li>
+                <li><a href="www.linkedin.com/in/christianborja"><i class="fa fa-linkedin"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="team-member">
+              <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+                <div class="flipper">
+                  <div class="front">
+                    <img src="../../content/img/team/samkim.png" class="img-responsive img-circle">
+                  </div>
+                  <div class="back">
+                    <div class="gif-img">
+                      <img src="../../content/img/team/samkim-coldbrew.gif" class="img-responsive img-circle">
+                    </div>
+                    <div class="gif-text">
+                      <p>Loves his DSLR, roadtrips, <br /> Spotify playlists, and <br /> all things design</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h4>Sam Kim</h4>
+              <p class="team-role">Full Stack Developer</p>
+              <ul class="list-inline social-buttons">
+                <li><a href="https://github.com/samkim28"><i class="fa fa-github"></i></a>
+                </li>
+                <li><a href="https://www.facebook.com/samkim28"><i class="fa fa-facebook"></i></a>
+                </li>
+                <li><a href="https://www.linkedin.com/in/samkim28"><i class="fa fa-linkedin"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="team-member">
+              <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+                <div class="flipper">
+                  <div class="front">
+                    <img src="../../content/img/team/sandytran.png" class="img-responsive img-circle">
+                  </div>
+                  <div class="back">
+                    <div class="gif-img">
+                      <img src="../../content/img/team/sandytran-puppy.gif" class="img-responsive img-circle">
+                    </div>
+                    <div class="gif-text">
+                      <p>Loves his DSLR, roadtrips, <br /> Spotify playlists, and <br /> all things design</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h4>Sandy Tran</h4>
+              <p class="team-role">Full Stack Developer</p>
+              <ul class="list-inline social-buttons">
+                <li><a href="https://github.com/justsandytran"><i class="fa fa-github"></i></a>
+                </li>
+                <li><a href="https://www.facebook.com/sandyteee"><i class="fa fa-facebook"></i></a>
+                </li>
+                <li><a href="https://www.linkedin.com/in/sandy-tran-253a78b5"><i class="fa fa-linkedin"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tools Section -->
+  <section id="tools" class="tools">
+    <h3><strong>Powered by the following technologies:</strong></h3>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3"><img src="../../content/img/logos/mysql.png"></div>
+        <div class="col-md-3"><img src="../../content/img/logos/express.png"></div>
+        <div class="col-md-3"><img src="../../content/img/logos/angular.png"></div>
+        <div class="col-md-3"><img src="../../content/img/logos/node.png"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-3"><img src="../../content/img/logos/html5.png"></div>
+        <div class="col-md-3"><img src="../../content/img/logos/css3.png"></div>
+        <div class="col-md-3"><img src="../../content/img/logos/bootstrap.png"></div>
+        <div class="col-md-3"><img src="../../content/img/logos/jquery.gif"></div>
+      </div>
+      <a href="https://github.com/metermate/metermate/tree/dev" class="btn btn-outline btn-xl view-github">View on GitHub</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2016 <span>MeterMate</span>. All Rights Reserved.</p>
+    </div>
+  </footer>
 </div>

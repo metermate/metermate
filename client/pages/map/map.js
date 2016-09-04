@@ -8,200 +8,198 @@ angular
     $window.onload = function() {
 
       /* ---------- GOOGLE MAP ---------- */
-      //creates the map onload
+      // creates the map on load
       var map = new google.maps.Map(document.getElementById('map'), {
         center: new google.maps.LatLng(34.019325, -118.494809), // sets default center to MKS
         zoom: 20,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       });
 
-      //runs a function when the map becomes idle after zooming or moving around
-      //this function gets the Southwest and Northeast coordinates of the current window view
+      // runs a function when the map becomes idle after zooming or moving around
+      // this function gets the Southwest and Northeast coordinates of the current window view
       google.maps.event.addListener(map, 'idle', function() {
-          bounds = map.getBounds();
-          sw = bounds.getSouthWest();
-          ne = bounds.getNorthEast();
-          var param = {
-            swLat: sw.lat(),
-            swLng: sw.lng(),
-            neLat: ne.lat(),
-            neLng: ne.lng()
-          }
+        bounds = map.getBounds();
+        sw = bounds.getSouthWest();
+        ne = bounds.getNorthEast();
+        var param = {
+          swLat: sw.lat(),
+          swLng: sw.lng(),
+          neLat: ne.lat(),
+          neLng: ne.lng()
+        };
 
-      Map.getMeterData(param)
-        .then(function(data) {
-          console.log('Data from getMeterData in MapCtrl: ', data);
-          meterData = [];
-          meterData = data;
+        Map.getMeterData(param)
+          .then(function(data) {
+            console.log('Data from getMeterData in MapCtrl: ', data);
+            meterData = [];
+            meterData = data;
 
-          /* ---------- MARKERS ---------- */
-          var markers = [];
+            /* ---------- MARKERS ---------- */
+            var markers = [];
+            var meterIcon = {
+              size: new google.maps.Size(18, 51),
+              origin: new google.maps.Point(0, 0),
+              anchor: new google.maps.Point(9, 51),
+              scaledSize: new google.maps.Size(18, 51)
+            };
 
-          var meterIcon = {
-            size: new google.maps.Size(18, 51),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(9, 51),
-            scaledSize: new google.maps.Size(18, 51)
-          };
+            for (var i = 0; i < meterData.length; i++) {
+              // creates marker for each meter in meterData array
+              var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(meterData[i].latitude, meterData[i].longitude),
+                id: meterData[i].meter_id,
+                active: meterData[i].active,
+                area: meterData[i].area,
+                street_address: meterData[i].street_address,
+                event_type: meterData[i].event_type,
+                event_time: meterData[i].event_time
+              });
 
-          for (var i = 0; i < meterData.length; i++) {
-            // creates marker for each meter in meterData array
-            var marker = new google.maps.Marker({
-              position: new google.maps.LatLng(meterData[i].latitude, meterData[i].longitude),
-              id: meterData[i].meter_id,
-              active: meterData[i].active,
-              area: meterData[i].area,
-              street_address: meterData[i].street_address,
-              event_type: meterData[i].event_type,
-              event_time: meterData[i].event_time
-            });
+              // makes area titlecase (for info window)
+              if(meterData[i].area === 'DOWNTOWN-CBD') {
+                marker.area = 'Downtown-Central Business District';
+              } else {
+                var areaStr = marker.area;
+                marker.area = areaStr.split(' ').map(word => word[0].toUpperCase() + word.substring(1).toLowerCase()).join(' ');
+              }
 
-            // makes area titlecase (for info window)
-            if(meterData[i].area === 'DOWNTOWN-CBD') {
-              marker.area = 'Downtown-Central Business District';
-            } else {
-              var areaStr = marker.area;
-              marker.area = areaStr.split(' ').map(word => word[0].toUpperCase() + word.substring(1).toLowerCase()).join(' ');
-            }
+              // makes approx. address titlecase (for info window)
+              var addressStr = marker.street_address;
+              marker.street_address = addressStr.split(' ').map(word => word[0].toUpperCase() + word.substring(1).toLowerCase()).join(' ');
 
-            // makes approx. address titlecase (for info window)
-            var addressStr = marker.street_address;
-            marker.street_address = addressStr.split(' ').map(word => word[0].toUpperCase() + word.substring(1).toLowerCase()).join(' ');
+              // shows green meter if available, red meter if occupied
+              if(meterData[i].event_type === 'SE') {
+                console.log('<-- # of available meters');
+                meterIcon.url = '../../content/img/meter-icons/meter-icon-green.png';
+                marker.setIcon(meterIcon);
+                marker.status = 'Available';
+              } else {
+                meterIcon.url = '../../content/img/meter-icons/meter-icon-red.png';
+                marker.setIcon(meterIcon);
+                marker.status = 'Occupied';
+              }
 
-            // shows green meter if available, red meter if occupied
-            if(meterData[i].event_type === 'SE') {
-              console.log('<-- # of available meters');
-              meterIcon.url = '../../content/images/meter_icon_green.png';
-              marker.setIcon(meterIcon);
-              marker.status = 'Available';
-            } else {
-              meterIcon.url = '../../content/images/meter_icon_red.png';
-              marker.setIcon(meterIcon);
-              marker.status = 'Occupied';
-            }
+              markers.push(marker);
 
-            markers.push(marker);
+              /* ---------- INFO WINDOW ---------- */
+              var infoWindow = new google.maps.InfoWindow();
+              var streetViewBox = '<div id="street-view-box" style="width:375px;height:200px;"></div>';
 
-            /* ---------- INFO WINDOW ---------- */
-            var infoWindow = new google.maps.InfoWindow();
-            var streetViewBox = '<div id="street-view-box" style="width:375px;height:200px;"></div>';
+              // opens info window when user clicks on a marker
+              google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                return function () {
+                  // adds meter status, area, and address in info window
+                  infoWindow.setContent(
+                    '<p><strong>Current Status:</strong>&nbsp;&nbsp;' + marker.status + '</p>' + '<p><strong>City Area:</strong>&nbsp;&nbsp;' + marker.area + '</p>' + '<p><strong>Approx. Address:</strong>&nbsp;&nbsp;' + marker.street_address + '</p>' + streetViewBox
+                  );
+                  infoWindow.open(map, this);
 
-            // opens info window when user clicks on a marker
-            google.maps.event.addListener(marker, 'click', (function(marker, i) {
-              return function () {
-                // adds meter status, area, and address in info window
-                infoWindow.setContent(
-                  '<p><strong>Current Status:</strong>&nbsp;&nbsp;' + marker.status + '</p>' + '<p><strong>City Area:</strong>&nbsp;&nbsp;' + marker.area + '</p>' + '<p><strong>Approx. Address:</strong>&nbsp;&nbsp;' + marker.street_address + '</p>' + streetViewBox
-                );
-                infoWindow.open(map, this);
+                  // adds street view box in info window
+                  var pano = null;
+                  google.maps.event.addListener(infoWindow, 'domready', function () {
+                    if (pano != null) {
+                      pano.unbind('position');
+                      pano.setVisible(false);
+                    }
+                    pano = new google.maps.StreetViewPanorama(document.getElementById('street-view-box'), {
+                      navigationControl: true,
+                      navigationControlOptions: { style: google.maps.NavigationControlStyle.ANDROID },
+                      enableCloseButton: false,
+                      addressControl: false,
+                      linksControl: false
+                    });
 
-                // adds street view box in info window
-                var pano = null;
-                google.maps.event.addListener(infoWindow, 'domready', function () {
-                  if (pano != null) {
-                    pano.unbind('position');
-                    pano.setVisible(false);
-                  }
-                  pano = new google.maps.StreetViewPanorama(document.getElementById('street-view-box'), {
-                    navigationControl: true,
-                    navigationControlOptions: { style: google.maps.NavigationControlStyle.ANDROID },
-                    enableCloseButton: false,
-                    addressControl: false,
-                    linksControl: false
+                    var pin = new google.maps.MVCObject();
+                    pin.set('position', marker.getPosition());
+                    pano.bindTo('position', pin);
+                    pano.setVisible(true);
                   });
 
-                  var pin = new google.maps.MVCObject();
-                  pin.set('position', marker.getPosition());
-                  pano.bindTo('position', pin);
-                  pano.setVisible(true);
-                });
-
-                // hides street view box when info window is closed
-                google.maps.event.addListener(infoWindow, 'closeclick', function () {
-                  pano.unbind('position');
-                  pano.setVisible(false);
-                  pano = null;
-                });
-              }
-            })(marker, i));
-          }
-
-          // closes info window when user clicks marker again
-          google.maps.event.addListener(map, 'click', function() {
-            infoWindow.close();
-          });
-
-          // sets markers on map
-          for (var i = 0; i < markers.length; i++) {
-            console.log('<-- total # of meters');
-            markers[i].setMap(map);
-          }
-
-          /* ---------- MARKER CLUSTERER ---------- */
-          var options = {
-            imagePath: '../../content/images/m',
-            gridSize: 80,
-            maxZoom: 20,
-            minClusterZoom: 14,
-            zoomOnClick: true,
-            averageCenter: true,
-            minimumClusterSize: 5
-          };
-
-         if(markerCluster !== undefined) {
-           markerCluster.clearMarkers();
-         }
-
-         markerCluster = new MarkerClusterer(map, markers, options);
-
-          //this if statement prevents the Search Bar and Find Your Location functions to run constantly with each map change event
-        if(!areMetersLoaded) {
-
-          /* ---------- SEARCH BAR ---------- */
-          var input = document.getElementById('pac-input');
-          var searchBox = new google.maps.places.SearchBox(input);
-
-          map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-          map.addListener('bounds_changed', function() {
-            searchBox.setBounds(map.getBounds());
-          });
-          searchBox.addListener('places_changed', function() {
-            var places = searchBox.getPlaces();
-            if (places.length == 0) {
-              return;
+                  // hides street view box when info window is closed
+                  google.maps.event.addListener(infoWindow, 'closeclick', function () {
+                    pano.unbind('position');
+                    pano.setVisible(false);
+                    pano = null;
+                  });
+                }
+              })(marker, i));
             }
-            var bounds = new google.maps.LatLngBounds();
-            places.forEach(function(place) {
-              if (!place.geometry) {
-                console.log('Returned place contains no geometry');
-                return;
-              }
-              if (place.geometry.viewport) {
-                bounds.union(place.geometry.viewport); // only geocodes have viewport
-              } else {
-                bounds.extend(place.geometry.location);
-              }
+
+            // closes info window when user clicks marker again
+            google.maps.event.addListener(map, 'click', function() {
+              infoWindow.close();
             });
-            map.fitBounds(bounds);
+
+            // sets markers on map
+            for (var i = 0; i < markers.length; i++) {
+              console.log('<-- total # of meters');
+              markers[i].setMap(map);
+            }
+
+            /* ---------- MARKER CLUSTERER ---------- */
+            var options = {
+              imagePath: '../../content/img/clusters/m',
+              gridSize: 80,
+              maxZoom: 20,
+              minClusterZoom: 14,
+              zoomOnClick: true,
+              averageCenter: true,
+              minimumClusterSize: 5
+            };
+
+            if(markerCluster !== undefined) {
+              markerCluster.clearMarkers();
+            }
+
+            markerCluster = new MarkerClusterer(map, markers, options);
+
+            // this if statement prevents the Search Bar and Find Your Location functions to run constantly with each map change event
+            if(!areMetersLoaded) {
+
+              /* ---------- SEARCH BAR ---------- */
+              var input = document.getElementById('pac-input');
+              var searchBox = new google.maps.places.SearchBox(input);
+
+              map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+              map.addListener('bounds_changed', function() {
+                searchBox.setBounds(map.getBounds());
+              });
+
+              searchBox.addListener('places_changed', function() {
+                var places = searchBox.getPlaces();
+                var bounds = new google.maps.LatLngBounds();
+
+                if (places.length == 0) {
+                  return;
+                }
+                places.forEach(function(place) {
+                  if (!place.geometry) {
+                    console.log('Returned place contains no geometry');
+                    return;
+                  }
+                  if (place.geometry.viewport) {
+                    bounds.union(place.geometry.viewport); // only geocodes have viewport
+                  } else {
+                    bounds.extend(place.geometry.location);
+                  }
+                });
+                map.fitBounds(bounds);
+              });
+
+              /* ---------- FIND MY LOCATION ---------- */
+              var centerControlDiv = document.createElement('div');
+              centerControlDiv.innerHTML = '<button id="locateMe">Find Your Location</button>';
+              centerControlDiv.onclick = function() {
+                FindCurrentLocation.centerMap(map);
+              }
+              map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv, map);
+            }
+
+            areMetersLoaded = true;
+          })
+          .catch(function(error) {
+            console.error('Error retrieving data from getMeterData: ', error);
           });
-
-
-          /* ---------- FIND MY LOCATION ---------- */
-
-          var centerControlDiv = document.createElement('div');
-          centerControlDiv.innerHTML = '<button id="locateMe">Find Your Location</button>';
-          centerControlDiv.onclick = function() {
-            FindCurrentLocation.centerMap(map);
-          }
-          map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv, map);
-        }
-
-          areMetersLoaded = true;
-
-        })
-        .catch(function(error) {
-          console.error('Error retrieving data from getMeterData: ', error);
-        })
       });
     };
   })
@@ -241,16 +239,15 @@ angular
             lat: position.coords.latitude,
             lng: position.coords.longitude
           }
-          map.setCenter(pos); //Centers map on current location.
-          // var currentLocationPin = new google.maps.Marker({ // Creates a pin at current location
-          //   position: new google.maps.LatLng(pos.lat, pos.lng), // Sets position prop to geolocation
-          //   animation: google.maps.Animation.DROP
-          //   // icon: '../../content/images/',
-          // });
-          // currentLocationPin.setMap(map); // Adds a pin to your current location
-        })
+          map.setCenter(pos); // centers map on current location
+          var currentLocationPin = new google.maps.Marker({ // creates a pin at current location
+            position: new google.maps.LatLng(pos.lat, pos.lng), // sets position prop to geolocation
+            animation: google.maps.Animation.DROP
+          });
+          currentLocationPin.setMap(map); // drops a pin on your current location
+        });
       } else {
         error('Geo Location is not supported');
       }
-    }
+    };
 });

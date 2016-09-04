@@ -1,0 +1,47 @@
+/* ---------- TOOLS SECTION ---------- */
+section.tools {
+  text-align: center;
+  background-color: #EEEEEE;
+  padding-bottom: 7px;
+}
+section.tools .container {
+  display: inline;
+  text-align: center;
+}
+section.tools .row {
+  display: inline;
+}
+section.tools h3 {
+  padding-top: 20px;
+  margin-bottom: 0;
+}
+section.tools img {
+  width: 200px;
+  padding: 0px 50px 0px 50px;
+}
+[class*="col-"] {
+  float: none;
+  display: table-cell;
+  vertical-align: middle;
+}
+@media (min-width: 768px) {
+  .tools .col-md-3 {
+    display: inline;
+  }
+}
+.view-github {
+  color: white;
+  background-color: black;
+  border-color: black;
+  border: 1px solid;
+  margin-top: 50px;
+  margin-bottom: 10px;
+}
+.btn-outline.view-github:hover,
+.btn-outline.view-github:focus,
+.btn-outline.view-github:active,
+.btn-outline.view-github.active {
+  color: white;
+  background-color: #fdcc52;
+  border-color: #fdcc52;
+}
