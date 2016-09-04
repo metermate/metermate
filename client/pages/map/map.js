@@ -30,7 +30,7 @@ angular
 
       Map.getMeterData(param)
         .then(function(data) {
-          console.log('Data from getMeterData in MapCtrl: ', data);
+          // console.log('Data from getMeterData in MapCtrl: ', data);
           meterData = [];
           meterData = data;
 
