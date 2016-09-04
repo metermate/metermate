@@ -45,10 +45,6 @@ client
 │       └── styles.css
 |  
 ├── pages
-│   ├── auth
-|   |   ├── about.js
-|   |   └── about.html
-|   |
 |   |
 │   ├── home
 |   |   ├── home.js
