@@ -37,6 +37,19 @@ section.team .team-content h2 {
   margin: 0 auto;
   border: 5px solid white;
 }
+.team-member .gif-img {
+  position: absolute;
+  z-index: 1;
+}
+.team-member .gif-text {
+  position: absolute;
+  top: 97px;
+  left: 7px;
+  width: 225px;
+  height: 225px;
+  z-index: 2;
+  font-size: 14px;
+}
 .team-member h4 {
   margin-top: 25px;
   margin-bottom: 0;
