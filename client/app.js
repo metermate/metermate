@@ -1,5 +1,5 @@
 angular
-  .module('metermate', ['ui.router', 'metermate.home', 'metermate.map', 'metermate.about'])
+  .module('metermate', ['ui.router', 'metermate.home', 'metermate.map'])
 
   .config(function($stateProvider,
     $urlRouterProvider) {

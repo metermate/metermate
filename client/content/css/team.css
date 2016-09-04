@@ -1,0 +1,78 @@
+/* ---------- TEAM SECTION ---------- */
+section.team {
+  position: relative;
+  width: 100%;
+  min-height: auto;
+  overflow-y: hidden;
+  background: url("../img/home/bg-pattern.png"), #360033;
+  /* fallback for old browsers */
+  background: url("../img/home/bg-pattern.png"), -webkit-linear-gradient(to left, #360033, #003366);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: url("../img/home/bg-pattern.png"), linear-gradient(to left, #360033, #003366);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color: white;
+  padding: 60px 0;
+}
+section.team .team-content {
+  position: relative;
+  z-index: 1;
+}
+section.team .team-content h2 {
+  margin-top: 0;
+  margin-bottom: 25px;
+  color: white;
+  max-width: 450px;
+  font-size: 40px;
+}
+@media (min-width: 768px) {
+  section.team .team-content h2 {
+    font-size: 50px;
+  }
+}
+.team-member {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.team-member img {
+  margin: 0 auto;
+  border: 5px solid white;
+}
+.team-member h4 {
+  margin-top: 25px;
+  margin-bottom: 0;
+  text-transform: none;
+}
+.team-member p {
+  margin-top: 0;
+}
+p.team-role {
+  color: #fdcc52;
+}
+ul.social-buttons {
+  margin-bottom: 0;
+}
+ul.social-buttons li a {
+  display: block;
+  background-color: #222222;
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
+  font-size: 20px;
+  line-height: 40px;
+  color: white;
+  outline: none;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+}
+ul.social-buttons li a:hover,
+ul.social-buttons li a:focus,
+ul.social-buttons li a:active {
+  background-color: #fdcc52;
+}
+.btn:focus,
+.btn:active,
+.btn.active,
+.btn:active:focus {
+  outline: none;
+}

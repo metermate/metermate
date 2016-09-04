@@ -1,0 +1,39 @@
+/* ---------- FEATURES SECTION ---------- */
+section.features {
+  padding-top: 30px;
+}
+section.features .container {
+  text-align: center;
+  padding-bottom: 30px;
+}
+section.features .row {
+  display: inline;
+}
+section.features .section-heading {
+  margin-bottom: 20px;
+  text-align: center;
+}
+section.features .section-heading h2 {
+  margin-top: 0;
+  font-size: 50px;
+  font-weight: bold;
+}
+section.features .section-heading p {
+  margin-bottom: 40px;
+  font-size: 20px;
+  color: black;
+}
+section.features .feature-heading {
+  font-size: 26px;
+  font-weight: bold;
+}
+section.features .feature-text {
+  font-size: 18px;
+  color: black;
+}
+section.features .feature-icon {
+  background: -webkit-linear-gradient(to left, #DC2430, #243B55);
+  background: linear-gradient(to left, #DC2430, #243B55);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
