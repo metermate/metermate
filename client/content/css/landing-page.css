@@ -1,0 +1,101 @@
+/* ---------- LANDING PAGE ---------- */
+header {
+  position: relative;
+  width: 100%;
+  min-height: auto;
+  overflow-y: hidden;
+  background: url("../img/home/promenade-bg.jpg");
+  background-position: 0% 5%;
+  color: white;
+}
+header .header-content {
+  padding: 150px 0 50px;
+  position: relative;
+}
+header .header-content .header-content-inner {
+  display: block;
+  position: relative;
+  width: 800px;
+  max-width: 600px;
+}
+header .header-content .header-content-inner h1 {
+  margin-top: 0;
+  margin-bottom: 30px;
+  font-size: 30px;
+}
+@media (min-width: 768px) {
+  header {
+    min-height: 100%;
+  }
+  header .header-content {
+    text-align: left;
+    padding: 0;
+    height: 100vh;
+  }
+  header .header-content .header-content-inner {
+    max-width: none;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  header .header-content .header-content-inner h1 {
+    font-size: 35px;
+  }
+}
+@media (min-width: 768px) {
+  header .header-content .header-content-inner h1 {
+    font-size: 50px;
+  }
+}
+
+/* ---------- SEARCH BAR ---------- */
+.search-bar {
+  display: inline;
+  padding-top: 30px;
+  padding-bottom: 10px;
+}
+input {
+  outline: none;
+}
+input[type=search] {
+  -webkit-appearance: textfield;
+  -webkit-box-sizing: content-box;
+  font-family: 'Catamaran', 'Helvetica', 'Arial', 'sans-serif';
+  font-size: 20px;
+  color: black;
+}
+input::-webkit-search-decoration,
+input::-webkit-search-cancel-button {
+  display: none;
+}
+input[type=search] {
+  background: #fff url(https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-128.png) no-repeat 2px;
+  background-position: 9px 9px;
+  background-size: 28px;
+  border: solid 1px #ccc;
+  padding: 11px 10px 9px 45px;
+  width: 400px;
+
+  -webkit-border-radius: 10em;
+  -moz-border-radius: 10em;
+  border-radius: 10em;
+
+  -webkit-transition: all .5s;
+  -moz-transition: all .5s;
+  transition: all .5s;
+}
+input[type=search]:focus {
+  width: 600px;
+  background-color: #fff;
+  border-color: #66CC75;
+  -webkit-box-shadow: 0 1px 5px 1px rgba(109,207,246,.5);
+  -moz-box-shadow: 0 1px 5px 1px rgba(109,207,246,.5);
+  box-shadow: 0 1px 5px 1px rgba(109,207,246,.5);
+}
+input:-moz-placeholder {
+  color: #999;
+}
+input::-webkit-input-placeholder {
+  color: #999;
+}
