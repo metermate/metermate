@@ -3,6 +3,7 @@ var request = require('request');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var http = require('http');
+var routes = require('./routes/routes.js');
 
 var latestData;
 
@@ -12,26 +13,7 @@ app.use(cors());
 app.use(express.static('./client'));
 app.set('port', process.env.PORT || 1337);
 
-app.get('/api/meter-locations', function(req, res) {
-  var url = 'https://parking.api.smgov.net/meters/';
-  request.get(url, function(error, response, body) {
-    if (error) {
-      res.status(400).send(error);
-    }
-    body = JSON.parse(body);
-
-    dbConnection.query('TRUNCATE meters');
-    for (var i = 0; i < body.length; i++) {
-      dbConnection.query('INSERT INTO meters (meter_id, latitude, longitude, active, area, street_address) VALUES (?,?,?,?,?,?)', [body[i].meter_id, body[i].latitude, body[i].longitude, body[i].active, body[i].area, body[i].street_address], function(err, result) {
-        if (err) {
-          console.error(err);
-        }
-      });
-    }
-    res.status(200).json(body);
-    res.end();
-  });
-});
+app.use('/api/meters', routes);
 
 app.get('/api/clean-meter-locations', function(req, res) { // Used to remove bad data points
   console.log("Removing bad data points from DB")
