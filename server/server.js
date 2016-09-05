@@ -14,17 +14,6 @@ app.set('port', process.env.PORT || 1337);
 
 app.use('/api/meters', routes);
 
-app.get('/api/get-meter-data', function(req, res) {
-  var testArr = [];
-  for(var i = 0; i < latestData.length; i++) {
-    if(latestData[i].latitude <= Number(req.query.neLat) && latestData[i].latitude >= Number(req.query.swLat) && latestData[i].longitude <= Number(req.query.neLng) && latestData[i].longitude >= Number(req.query.swLng)) {
-      testArr.push(latestData[i]);
-    }
-  }
-  console.log("Number of meters in viewport: " + testArr.length);
-  res.send(testArr);
-});
-
 /* --------- RETRIEVES METER DATA ON INITIALIZATION --------- */
 
 // Retrieves meter locations and stores in DB as soon as server initializes
@@ -51,7 +40,7 @@ setTimeout(dbHelpers.storeLatestData, 15000);
 
 /* --------- METER EVENTS AUTO UPDATE --------- */
 
-// Retrieves meter events and updates data in DB every 5 minutes
+// Retrieves meter events and updates data in DB every 2 minutes
 setInterval(function() {
   console.log('AUTO UPDATE: Retrieving latest meter events from API...');
   http.get({
