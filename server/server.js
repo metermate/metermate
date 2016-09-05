@@ -47,7 +47,7 @@ setTimeout(function() {
 }, 10000);
 
 // Stores latest meter data DB in local storage
-setTimeout(dbHelpers.storeLatestData, 120000);
+setTimeout(dbHelpers.storeLatestData, 15000);
 
 /* --------- METER EVENTS AUTO UPDATE --------- */
 
@@ -59,10 +59,10 @@ setInterval(function() {
     port: 1337,
     path: '/api/meters/events'
   });
-}, 300000);
+}, 120000);
 
 // After the DB is updated, the local storage is also updated 10 seconds later
-setInterval(dbHelpers.storeLatestData, 310000);
+setInterval(dbHelpers.storeLatestData, 130000);
 
 app.listen(app.get('port'), function() {
   console.log('Server listening on port: ', app.get('port'));

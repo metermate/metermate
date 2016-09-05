@@ -28,3 +28,5 @@ exports.storeLatestData = function() {
     }
   });
 };
+
+exports.latestData = latestData;
