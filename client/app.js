@@ -1,9 +1,6 @@
 angular
   .module('metermate', ['ui.router', 'metermate.home', 'metermate.map'])
-
-  .config(function($stateProvider,
-    $urlRouterProvider) {
-    $urlRouterProvider.otherwise('/');
+  .config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home', {
         url: '/',
@@ -14,11 +11,7 @@ angular
         url: '/map',
         templateUrl: './pages/map/map.html',
         controller: 'MapCtrl'
-      })
-      .state('about', {
-        url: '/about',
-        templateUrl: './pages/about/about.html',
-        controller: 'AboutCtrl'
-      })
+      });
 
+    $urlRouterProvider.otherwise('/');
   });

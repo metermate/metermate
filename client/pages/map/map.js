@@ -211,7 +211,7 @@ angular
     function getMeterData(param) {
       return $http({
         method: 'GET',
-        url: '/api/get-meter-data',
+        url: '/api/meters/latest-data',
         params: {
           swLat: param.swLat,
           swLng: param.swLng,

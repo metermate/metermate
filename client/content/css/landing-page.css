@@ -75,7 +75,7 @@ input[type=search] {
   background-size: 28px;
   border: solid 1px #ccc;
   padding: 11px 10px 9px 45px;
-  width: 400px;
+  width: 350px;
 
   -webkit-border-radius: 10em;
   -moz-border-radius: 10em;
@@ -86,7 +86,7 @@ input[type=search] {
   transition: all .5s;
 }
 input[type=search]:focus {
-  width: 600px;
+  width: 500px;
   background-color: #fff;
   border-color: #66CC75;
   -webkit-box-shadow: 0 1px 5px 1px rgba(109,207,246,.5);
