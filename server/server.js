@@ -4,8 +4,7 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 var http = require('http');
 var routes = require('./routes/routes.js');
-
-var latestData;
+var dbHelpers = require('./helpers/dbHelpers.js');
 
 var app = express();
 app.use(bodyParser.json({ extend: false }));
@@ -14,24 +13,6 @@ app.use(express.static('./client'));
 app.set('port', process.env.PORT || 1337);
 
 app.use('/api/meters', routes);
-
-app.get('/api/clean-meter-locations', function(req, res) { // Used to remove bad data points
-  console.log("Removing bad data points from DB")
-  dbConnection.query('DELETE from meters WHERE latitude = 0 AND longitude = 0', function(err, result) {
-    if(err) {
-      console.error(err);
-    }
-    console.log("Removed data points at 0, 0: ");
-    res.end();
-  });
-  dbConnection.query('DELETE from meters WHERE latitude = 34.01945 AND longitude = -118.49119', function(err, result) {
-    if(err) {
-      console.error(err);
-    }
-    console.log("Removed data points at 34.01945, -118.49119");
-    res.end();
-  });
-});
 
 app.get('/api/store-latest-meter-data', function(req, res) { // Stores current DB into latestData array
   dbConnection.query('SELECT * from meters', function(err, result) {
@@ -54,28 +35,23 @@ app.get('/api/get-meter-data', function(req, res) {
   res.send(testArr);
 });
 
-/* --------- ON SERVER INITIALIZE --------- */
+/* --------- RETRIEVES METER DATA ON INITIALIZATION --------- */
 
-console.log("Populating DB"); // Populates DB with meter data
+// Retrieves meter locations and stores in DB as soon as server initializes
 http.get({
   host: 'localhost',
   port: 1337,
-  path: '/api/meter-locations'
-})
+  path: '/api/meter/locations'
+});
 
-setTimeout(function() { // Removes bad data points from DB
-  http.get({
-    host: 'localhost',
-    port: 1337,
-    path: '/api/clean-meter-locations'
-  })
-}, 7000)
+// Removes erroneous location data from DB
+setTimeout(dbHelpers.cleanLocationData, 5000);
 
 setTimeout(function() { // Populates DB with meter events data
   http.get({
     host: 'localhost',
     port: 1337,
-    path: '/api/meter-events'
+    path: '/api/meter/events'
   })
 }, 10000)
 
@@ -96,7 +72,7 @@ setInterval(function(){ // Retrieves meter events and updates DB
   http.get({
     host: 'localhost',
     port: 1337,
-    path: '/api/meter-events'
+    path: '/api/meter/events'
   })
 
   /* --------- STORES LATEST DB DATA INTO ARRAY --------- */
