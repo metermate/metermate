@@ -14,16 +14,6 @@ app.set('port', process.env.PORT || 1337);
 
 app.use('/api/meters', routes);
 
-app.get('/api/store-latest-meter-data', function(req, res) { // Stores current DB into latestData array
-  dbConnection.query('SELECT * from meters', function(err, result) {
-    if (err) {
-      console.error(err);
-    }
-    latestData = result;
-    res.status(200).end();
-  });
-});
-
 app.get('/api/get-meter-data', function(req, res) {
   var testArr = [];
   for(var i = 0; i < latestData.length; i++) {
@@ -41,53 +31,38 @@ app.get('/api/get-meter-data', function(req, res) {
 http.get({
   host: 'localhost',
   port: 1337,
-  path: '/api/meter/locations'
+  path: '/api/meters/locations'
 });
 
 // Removes erroneous location data from DB
 setTimeout(dbHelpers.cleanLocationData, 5000);
 
-setTimeout(function() { // Populates DB with meter events data
+// Retrieves meter events and stores in DB
+setTimeout(function() {
   http.get({
     host: 'localhost',
     port: 1337,
-    path: '/api/meter/events'
-  })
-}, 10000)
+    path: '/api/meters/events'
+  });
+}, 10000);
 
-setTimeout(function(){ // Stores current state of DB into latestData array
-  console.log("Storing current DB into latestData array")
-  http.get({
-    host: 'localhost',
-    port: 1337,
-    path: '/api/store-latest-meter-data'
-  })
-
-}, 240000)
+// Stores latest meter data DB in local storage
+setTimeout(dbHelpers.storeLatestData, 120000);
 
 /* --------- METER EVENTS AUTO UPDATE --------- */
 
-setInterval(function(){ // Retrieves meter events and updates DB
-  console.log("Retrieving Meter Events Data")
+// Retrieves meter events and updates data in DB every 5 minutes
+setInterval(function() {
+  console.log('AUTO UPDATE: Retrieving latest meter events from API...');
   http.get({
     host: 'localhost',
     port: 1337,
-    path: '/api/meter/events'
-  })
+    path: '/api/meters/events'
+  });
+}, 300000);
 
-  /* --------- STORES LATEST DB DATA INTO ARRAY --------- */
-
-  setTimeout(function(){ // Stores current state of DB into latestData array
-    console.log("Storing current DB into latestData array")
-    http.get({
-      host: 'localhost',
-      port: 1337,
-      path: '/api/store-latest-meter-data'
-    })
-
-  }, 240000); // Timer set to 4 minutes to ensure DB is completely updated before storing to array
-
-}, 300000); // Interval set to every 5 minutes
+// After the DB is updated, the local storage is also updated 10 seconds later
+setInterval(dbHelpers.storeLatestData, 310000);
 
 app.listen(app.get('port'), function() {
   console.log('Server listening on port: ', app.get('port'));

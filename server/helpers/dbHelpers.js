@@ -16,3 +16,15 @@ exports.cleanLocationData = function() {
   });
   console.log('Removed erroneous meter location data');
 };
+
+exports.storeLatestData = function() {
+  // Updates local storage with latest meter data in DB
+  database.db.query('SELECT * from meters', function(err, result) {
+    if (err) {
+      console.error(err);
+    } else {
+      latestData = result;
+      console.log('Updated local storage with latest meter data');
+    }
+  });
+};
