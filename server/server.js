@@ -2,13 +2,7 @@ var express = require('express');
 var request = require('request');
 var bodyParser = require('body-parser');
 var cors = require('cors');
-var mysql = require('mysql');
 var http = require('http');
-var dbConnection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  database: 'meterDB'
-});
 
 var latestData;
 
@@ -17,21 +11,6 @@ app.use(bodyParser.json({ extend: false }));
 app.use(cors());
 app.use(express.static('./client'));
 app.set('port', process.env.PORT || 1337);
-
-dbConnection.connect(function(err) {
-  if (err) {
-    console.error('Error connecting to meterDB: ', err);
-  } else {
-    console.log('Successfully connected to meterDB');
-    dbConnection.query('CREATE TABLE IF NOT EXISTS meters (meter_id varchar(100), latitude varchar(100), longitude varchar(100), active varchar(100), area varchar(100), street_address varchar(100), event_type varchar(25), event_time varchar(100))', function(err, result){
-      if (err) {
-        console.log('Error creating table in meterDB: ', err);
-      } else {
-        console.log('Successfully created table in meterDB');
-      }
-    });
-  }
-});
 
 app.get('/api/meter-locations', function(req, res) {
   var url = 'https://parking.api.smgov.net/meters/';
