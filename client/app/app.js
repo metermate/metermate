@@ -7,18 +7,13 @@ angular
     $stateProvider
       .state('home', {
         url: '/',
-        templateUrl: './pages/home/home.html',
+        templateUrl: './app/pages/home/home.html',
         controller: 'HomeCtrl'
       })
       .state('map', {
         url: '/map',
-        templateUrl: './pages/map/map.html',
+        templateUrl: './app/pages/map/map.html',
         controller: 'MapCtrl'
-      })
-      .state('about', {
-        url: '/about',
-        templateUrl: './pages/about/about.html',
-        controller: 'AboutCtrl'
       })
 
   });

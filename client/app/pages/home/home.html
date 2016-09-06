@@ -12,9 +12,9 @@
               </h1>
               <div class="search-bar">
                 <form>
-                  <input type="search" placeholder="Enter a place or address" />
+                  <input id="homeInput" ng-model="coordinates" type="search" placeholder="Enter a place or address" />
                 </form>
-                <a href="#/map" class="btn btn-outline btn-xl search-btn"><p>Search Map</p></a>
+                <a ng-click="searchLocation(coordinates)" class="btn btn-outline btn-xl search-btn"><p>Search Map</p></a>
               </div>
             </div>
           </div>
