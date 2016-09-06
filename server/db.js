@@ -1,9 +1,10 @@
 var mysql = require('mysql');
 
 var db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  database: 'meterDB'
+  host: 'mysql.kanadachi.com',
+  user: 'css_s',
+  password: 'kimchiboyz',
+  database: 'metermate'
 });
 
 db.connect(function(err) {
