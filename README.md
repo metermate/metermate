@@ -92,11 +92,11 @@ server
 ```
 ENDPOINT                                         METHOD         EXPECTED                               RESPONSE
 ──────────────────────────────────────────────   ─────────────  ────────────────────────────────────   
-/api/meter-events                              │ POST         │ {                                    │if successful                  
+/api/meter-events                              │ GET         │ {                                    │if successful                  
                                                │              │  'example': 'example',               │   
                                                │              │  'example': 'example'                │
                                                │              │ }                                    │
-/api/get-meter-data                            │ POST         │ {                                    │if successful
+/api/get-meter-data                            │ GET         │ {                                    │if successful
                                                │              │  'example': 'example',               │
                                                │              │  'example': 'example'                │
                                                │              │ }                                    │
