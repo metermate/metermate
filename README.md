@@ -83,15 +83,30 @@ server
 ```
 ENDPOINT                                         METHOD         EXPECTED                               RESPONSE
 ──────────────────────────────────────────────   ─────────────  ────────────────────────────────────   
-/api/meters/locations                           │ GET          │ {                                  │if successful                  
-                                                │              │  'example': 'example',             │   
-                                                │              │  'example': 'example'              │
+/api/meters/locations                           │ GET          │ {                                  │if successful                                                    
+                                                │              │  'active': true,                   │   
+                                                │              │  'area': 'DOWNTOWN-CBD',           |
+                                                |              |  'latitude': 34.01633,             |
+                                                |              |  'longitude': -118.49191,          |
+                                                |              |  'meter_id': 'BRO0516',            |
+                                                |              |  'street_address' : '500 BROADWAY' |
+                                                |              │                                    |
                                                 │              │ }                                  │
 /api/meters/events                              │ GET          │ {                                  │if successful
                                                 │              │  'example': 'example',             │
                                                 │              │  'example': 'example'              │
                                                 │              │ }                                  │
 ```
+
+
+# API Documentation
+
+* [Santa Monica Parking Meter API](https://parking.api.smgov.net/)
+
+
+* [Google Maps API](https://developers.google.com/maps/)
+
+
 
 # Metermate Team
 
