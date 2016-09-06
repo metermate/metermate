@@ -4,6 +4,11 @@ angular
     var meterData = [];
     var areMetersLoaded = false;
     var markerCluster;
+    // window.map = new google.maps.Map(document.getElementById('map'), {
+    //   center: new google.maps.LatLng(34.019325, -118.494809), // sets default center to MKS
+    //   zoom: 20,
+    //   mapTypeId: google.maps.MapTypeId.ROADMAP
+    // });
 
     $window.onload = function() {
 

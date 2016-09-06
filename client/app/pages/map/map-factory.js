@@ -2,12 +2,8 @@ angular.module('metermate.map')
   .factory('FindCurrentLocation', function(){
   return {
     centerMap: centerMap,
-    setLocation: testing
   };
 
-  function testing(){
-    console.log('Inside metermate.map factory')
-  }
 
   function centerMap(map) {
     if (navigator.geolocation) {
@@ -31,12 +27,9 @@ angular.module('metermate.map')
 .factory('Map', function($http) {
   return {
     getMeterData: getMeterData,
-    testing: testing
   };
 
-  function testing(){
-    console.log("Inside Map factory")
-  }
+
   function getMeterData(param) {
     return $http({
       method: 'GET',

@@ -64,9 +64,18 @@ client
 Metermate's server is built using Express, Node, Request, CORS, Body parser, and mySQL as our database.
 ```
 server
-
-├── server
-    └── server.js
+├── controllers
+│   └── meterController.js
+|   |
+│   └── styles
+│       └── styles.css
+|  
+├── helpers
+│   └── dbHelpers.js
+│   
+├── db.js
+│  
+└── server.html
 ```
 
 # REST/CRUD outline
