@@ -33,16 +33,18 @@ Metermate's client side is built using AngularJS, Angular UI Router, Bootstrap, 
 ```
 client
 
-├── components
-│   ├── images
-|   |   ├── m1.png
-|   |   ├── m2.png
-|   |   ├── m3.png
-|   |   ├── m4.png
-|   |   └── m5.png
+├── app
+│   ├── home
+|   |   ├── homeController.js
+|   |   |
+|   |   └── homeView.html
 |   |
-│   └── styles
-│       └── styles.css
+│   ├── map
+|   |   ├── mapController.js
+|   |   ├── mapFactories.js
+|   |   └── mapView.html
+|   |
+|   └──  app.js
 |  
 ├── pages
 |   |
@@ -54,7 +56,14 @@ client
 |       ├── map.js
 |       └── map.html  
 │   
-├── app.js
+|── assets
+│   ├── css
+|   |
+|   |── fonts
+|   |
+│   ├── img
+|   |
+|   └── js
 │  
 └── index.html
 ```
@@ -64,9 +73,18 @@ client
 Metermate's server is built using Express, Node, Request, CORS, Body parser, and mySQL as our database.
 ```
 server
-
-├── server
-    └── server.js
+├── controllers
+│   └── meterController.js
+|   |
+│   └── styles
+│       └── styles.css
+|  
+├── helpers
+│   └── dbHelpers.js
+│   
+├── db.js
+│  
+└── server.html
 ```
 
 # REST/CRUD outline
@@ -74,11 +92,11 @@ server
 ```
 ENDPOINT                                         METHOD         EXPECTED                               RESPONSE
 ──────────────────────────────────────────────   ─────────────  ────────────────────────────────────   
-/api/meter-events                              │ POST         │ {                                    │if successful                  
+/api/meter-events                              │ GET          │ {                                    │if successful                  
                                                │              │  'example': 'example',               │   
                                                │              │  'example': 'example'                │
                                                │              │ }                                    │
-/api/get-meter-data                            │ POST         │ {                                    │if successful
+/api/get-meter-data                            │ GET          │ {                                    │if successful
                                                │              │  'example': 'example',               │
                                                │              │  'example': 'example'                │
                                                │              │ }                                    │
