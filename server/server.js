@@ -1,8 +1,10 @@
 var express = require('express');
+var os = require('os');
 var request = require('request');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var http = require('http');
+var model = require('./models/metersModel.js');
 var routes = require('./routes/routes.js');
 var dbHelpers = require('./helpers/dbHelpers.js');
 
@@ -17,22 +19,14 @@ app.use('/api/meters', routes);
 /* --------- RETRIEVES METER DATA ON INITIALIZATION --------- */
 
 // Retrieves meter locations and stores in DB as soon as server initializes
-http.get({
-  host: 'localhost',
-  port: 1337,
-  path: '/api/meters/locations'
-});
+model.locations.get();
 
 // Removes erroneous location data from DB
 setTimeout(dbHelpers.cleanLocationData, 5000);
 
 // Retrieves meter events and stores in DB
 setTimeout(function() {
-  http.get({
-    host: 'localhost',
-    port: 1337,
-    path: '/api/meters/events'
-  });
+  model.events.get();
 }, 10000);
 
 // Stores latest meter data DB in local storage
@@ -43,11 +37,7 @@ setTimeout(dbHelpers.storeLatestData, 15000);
 // Retrieves meter events and updates data in DB every 2 minutes
 setInterval(function() {
   console.log('AUTO UPDATE: Retrieving latest meter events from API...');
-  http.get({
-    host: 'localhost',
-    port: 1337,
-    path: '/api/meters/events'
-  });
+  model.events.get();
 }, 120000);
 
 // After the DB is updated, the local storage is also updated 10 seconds later
