@@ -8,6 +8,7 @@ exports.cleanLocationData = function() {
       console.error(err);
     }
   });
+  
   // Removes erroneous meter coordinates at (34.01945, -118.49119)
   database.db.query('DELETE from meters WHERE latitude = 34.01945 AND longitude = -118.49119', function(err, result) {
     if(err) {
