@@ -49,7 +49,8 @@ header .header-content .header-content-inner h1 {
   }
 }
 
-/* ---------- SEARCH BAR ---------- */
+/*
+---------- SEARCH BAR ----------
 .search-bar {
   display: inline;
   padding-top: 30px;
@@ -99,6 +100,7 @@ input:-moz-placeholder {
 input::-webkit-input-placeholder {
   color: #999;
 }
+*/
 
 /* ---------- SEARCH BUTTON ---------- */
 .search-btn {
