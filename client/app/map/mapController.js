@@ -1,6 +1,6 @@
 angular
   .module('metermate.map', [])
-  .controller('MapCtrl', function($scope, $window, Map, FindCurrentLocation) {
+  .controller('MapCtrl', function($scope, $window, Map, Geolocation) {
     var meterData = [];
     var areMetersLoaded = false;
     var markerCluster;
@@ -18,17 +18,18 @@ angular
       // runs a function when the map becomes idle after zooming or moving around
       // this function gets the Southwest and Northeast coordinates of the current window view
       google.maps.event.addListener(map, 'idle', function() {
-        bounds = map.getBounds();
-        sw = bounds.getSouthWest();
-        ne = bounds.getNorthEast();
-        var param = {
-          swLat: sw.lat(),
-          swLng: sw.lng(),
-          neLat: ne.lat(),
-          neLng: ne.lng()
-        };
+        if(!isWindowOpen) {
+          bounds = map.getBounds();
+          sw = bounds.getSouthWest();
+          ne = bounds.getNorthEast();
+          var param = {
+            swLat: sw.lat(),
+            swLng: sw.lng(),
+            neLat: ne.lat(),
+            neLng: ne.lng()
+          };
 
-        Map.getMeterData(param)
+          Map.getMeterData(param)
           .then(function(data) {
             console.log('Data from getMeterData in MapCtrl: ', data);
             meterData = [];
@@ -70,11 +71,11 @@ angular
               // shows green meter if available, red meter if occupied
               if(meterData[i].event_type === 'SE') {
                 console.log('<-- # of available meters');
-                meterIcon.url = '../../content/img/meter-icons/meter-icon-green.png';
+                meterIcon.url = '../../assets/img/meter-icons/meter-icon-green.png';
                 marker.setIcon(meterIcon);
                 marker.status = 'Available';
               } else {
-                meterIcon.url = '../../content/img/meter-icons/meter-icon-red.png';
+                meterIcon.url = '../../assets/img/meter-icons/meter-icon-red.png';
                 marker.setIcon(meterIcon);
                 marker.status = 'Occupied';
               }
@@ -87,6 +88,7 @@ angular
 
               // opens info window when user clicks on a marker
               google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                isWindowOpen = true;
                 return function () {
                   // adds meter status, area, and address in info window
                   infoWindow.setContent(
@@ -138,7 +140,7 @@ angular
 
             /* ---------- MARKER CLUSTERER ---------- */
             var options = {
-              imagePath: '../../content/img/clusters/m',
+              imagePath: '../../assets/img/clusters/m',
               gridSize: 80,
               maxZoom: 20,
               minClusterZoom: 14,
@@ -190,7 +192,7 @@ angular
               var centerControlDiv = document.createElement('div');
               centerControlDiv.innerHTML = '<button id="locateMe">Find Your Location</button>';
               centerControlDiv.onclick = function() {
-                FindCurrentLocation.centerMap(map);
+                Geolocation.centerMap(map);
               }
               map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv, map);
             }
@@ -200,54 +202,8 @@ angular
           .catch(function(error) {
             console.error('Error retrieving data from getMeterData: ', error);
           });
-      });
-    };
-  })
-  .factory('Map', function($http) {
-    return {
-      getMeterData: getMeterData
-    };
-
-    function getMeterData(param) {
-      return $http({
-        method: 'GET',
-        url: '/api/meters/latest-data',
-        params: {
-          swLat: param.swLat,
-          swLng: param.swLng,
-          neLat: param.neLat,
-          neLng: param.neLng
         }
-      })
-        .then(function(response) {
-          return response.data;
-        })
-        .catch(function(error) {
-          console.error(error);
-        });
+      });
+      isWindowOpen = false;
     };
-  })
-  .factory('FindCurrentLocation', function(){
-    return {
-      centerMap: centerMap
-    };
-
-    function centerMap(map) {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          var pos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          }
-          map.setCenter(pos); // centers map on current location
-          var currentLocationPin = new google.maps.Marker({ // creates a pin at current location
-            position: new google.maps.LatLng(pos.lat, pos.lng), // sets position prop to geolocation
-            animation: google.maps.Animation.DROP
-          });
-          currentLocationPin.setMap(map); // drops a pin on your current location
-        });
-      } else {
-        error('Geo Location is not supported');
-      }
-    };
-});
+  });
