@@ -33,16 +33,18 @@ Metermate's client side is built using AngularJS, Angular UI Router, Bootstrap, 
 ```
 client
 
-├── components
-│   ├── images
-|   |   ├── m1.png
-|   |   ├── m2.png
-|   |   ├── m3.png
-|   |   ├── m4.png
-|   |   └── m5.png
+├── app
+│   ├── home
+|   |   ├── homeController.js
+|   |   |
+|   |   └── homeView.html
 |   |
-│   └── styles
-│       └── styles.css
+│   ├── map
+|   |   ├── mapController.js
+|   |   ├── mapFactories.js
+|   |   └── mapView.html
+|   |
+|   └──  app.js
 |  
 ├── pages
 |   |
@@ -54,7 +56,14 @@ client
 |       ├── map.js
 |       └── map.html  
 │   
-├── app.js
+|── assets
+│   ├── css
+|   |
+|   |── fonts
+|   |
+│   ├── img
+|   |
+|   └── js
 │  
 └── index.html
 ```
