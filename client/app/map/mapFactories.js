@@ -23,7 +23,7 @@ angular
           console.error(error);
         });
     };
-  });
+  })
   .factory('Geolocation', function(){
     return {
       centerMap: centerMap
