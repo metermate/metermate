@@ -1,37 +1,26 @@
-# Developer Documentation
-* [Node](https://nodejs.org/en/)
-* [AngularJS](https://angularjs.org/)
-* [Angular UI Router](https://angular-ui.github.io/ui-router/site/#/api/ui.router)
-* [Express](https://expressjs.com/)
-* [Request](https://www.npmjs.com/package/request)
-* [Body Parser](https://www.npmjs.com/package/body-parser)
-* [CORS](https://www.npmjs.com/package/cors)
-* [mySQL](https://dev.mysql.com/doc/)
-* [Bootstrap](http://getbootstrap.com/)
-* [FontAwesome](http://fontawesome.io/)
+# MeterMate
+A web application that helps you find parking in Santa Monica. Search for your destination, find an available parking meter, park your car, and get on with your day.
 
-# Environment Setup
-1. Install server-side dependencies:
+Check out the deployed application [here](http://metermate.herokuapp.com).
+
+## Local Setup
+Clone this repository and create a local copy on your desktop:
+```
+$ git clone https://github.com/metermate/metermate.git
+```
+Navigate to the directory and install server-side and client-side dependencies:
 ```
 $ npm install
 ```
-
-2. Install client-side dependencies:
+Run the app on your local server:
 ```
-$ bower install
+$ npm start
 ```
+Open the app in your web browser by visiting https://localhost:1337.
 
-3. Run the app on a local server:
-```
-$ node server/server.js
-```
-
-4. Visit https://localhost:1337/ on your web browser
-
-
-# Front-End
-Metermate's client side is built using AngularJS, Angular UI Router, Bootstrap, and FontAwesome.
-
+## Application Structure
+#### Front-End
+MeterMate's client side is built using [AngularJS](https://angularjs.org), [Bootstrap](http://getbootstrap.com), and [jQuery](https://jquery.com).
 ```
 client
 
@@ -56,9 +45,8 @@ client
 └── index.html
 ```
 
-
-# Back-End
-Metermate's server is built using Express, Node, and MySQL as our database.
+#### Back-End
+Under the hood, MeterMate is powered by [Express](https://expressjs.com), [Node.js](https://nodejs.org/en), and [MySQL](https://www.mysql.com).
 ```
 server
 ├── controllers
@@ -78,38 +66,30 @@ server
 └── server.js
 ```
 
-# REST/CRUD outline
-
+## REST Outline
 ```
-ENDPOINT                                         METHOD         EXPECTED                               RESPONSE
-──────────────────────────────────────────────   ─────────────  ────────────────────────────────────   
-/api/meters/locations                           │ GET          │ {                                  │if successful                                                    
-                                                │              │  'active': true,                   │   
-                                                │              │  'area': 'DOWNTOWN-CBD',           |
-                                                |              |  'latitude': 34.01633,             |
-                                                |              |  'longitude': -118.49191,          |
-                                                |              |  'meter_id': 'BRO0516',            |
-                                                |              |  'street_address' : '500 BROADWAY' |
-                                                |              │                                    |
-                                                │              │ }                                  │
-/api/meters/events                              │ GET          │ {                                  │if successful
-                                                │              │  'example': 'example',             │
-                                                │              │  'example': 'example'              │
-                                                │              │ }                                  │
+ENDPOINT                            METHOD               EXPECTED RESULT
+──────────────────────────────── ──────────── ─────────────────────────────────────
+/api/meters/locations           │    GET     │ {                                   │
+                                │            │   "active": true,                   │
+                                │            │   "area": "DOWNTOWN-CBD",           |
+                                |            |   "latitude": 34.01633,             |
+                                |            |   "longitude": -118.49191,          |
+                                |            |   "meter_id": "BRO0516",            |
+                                |            |   "street_address" : "500 BROADWAY" |
+                                |            │ }                                   │
+                                │            │                                     │
+/api/meters/events              │    GET     │ {                                   │
+                                │            │   "example": "example",             │
+                                │            │   "example": "example"              │
+                                |            │ }                                   │
 ```
 
+## API Documentation
+* [Santa Monica Parking Data API](https://parking.api.smgov.net)
+* [Google Maps JavaScript API](https://developers.google.com/maps/documentation/javascript)
 
-# API Documentation
-
-* [Santa Monica Parking Meter API](https://parking.api.smgov.net/)
-
-
-* [Google Maps API](https://developers.google.com/maps/)
-
-
-
-# Metermate Team
-
+## Team
 * [Sam Chi - Product Owner](https://www.github.com/samsjchi)
 * [Christian Borja - Scrum Master](https://www.github.com/cborjah)
 * [Sam Kim - Dev Team](https://github.com/samkim28)
