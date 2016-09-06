@@ -18,17 +18,18 @@ angular
       // runs a function when the map becomes idle after zooming or moving around
       // this function gets the Southwest and Northeast coordinates of the current window view
       google.maps.event.addListener(map, 'idle', function() {
-        bounds = map.getBounds();
-        sw = bounds.getSouthWest();
-        ne = bounds.getNorthEast();
-        var param = {
-          swLat: sw.lat(),
-          swLng: sw.lng(),
-          neLat: ne.lat(),
-          neLng: ne.lng()
-        };
+        if(!isWindowOpen) {
+          bounds = map.getBounds();
+          sw = bounds.getSouthWest();
+          ne = bounds.getNorthEast();
+          var param = {
+            swLat: sw.lat(),
+            swLng: sw.lng(),
+            neLat: ne.lat(),
+            neLng: ne.lng()
+          };
 
-        Map.getMeterData(param)
+          Map.getMeterData(param)
           .then(function(data) {
             console.log('Data from getMeterData in MapCtrl: ', data);
             meterData = [];
@@ -87,6 +88,7 @@ angular
 
               // opens info window when user clicks on a marker
               google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                isWindowOpen = true;
                 return function () {
                   // adds meter status, area, and address in info window
                   infoWindow.setContent(
@@ -200,6 +202,8 @@ angular
           .catch(function(error) {
             console.error('Error retrieving data from getMeterData: ', error);
           });
+        }
       });
+      isWindowOpen = false;
     };
   });
