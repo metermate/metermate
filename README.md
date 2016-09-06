@@ -99,11 +99,6 @@ ENDPOINT                                         METHOD         EXPECTED        
 ```
 
 
-
-   "meter_id": "BRO0516",
-   "street_address": "500 BROADWAY"
- }
-
 # API Documentation
 
 * [Santa Monica Parking Meter API](https://parking.api.smgov.net/)
