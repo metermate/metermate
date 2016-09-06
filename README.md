@@ -89,17 +89,24 @@ server
 
 # REST/CRUD outline
 
+# REST/CRUD outline
+
 ```
 ENDPOINT                                         METHOD         EXPECTED                               RESPONSE
 ──────────────────────────────────────────────   ─────────────  ────────────────────────────────────   
-/api/meter-events                              │ GET          │ {                                    │if successful                  
-                                               │              │  'example': 'example',               │   
-                                               │              │  'example': 'example'                │
-                                               │              │ }                                    │
-/api/get-meter-data                            │ GET          │ {                                    │if successful
-                                               │              │  'example': 'example',               │
-                                               │              │  'example': 'example'                │
-                                               │              │ }                                    │
+/api/meters/locations                           │ GET          │ {                                  │if successful                                                    
+                                                │              │  'active': true,                   │   
+                                                │              │  'area': 'DOWNTOWN-CBD',           |
+                                                |              |  'latitude': 34.01633,             |
+                                                |              |  'longitude': -118.49191,          |
+                                                |              |  'meter_id': 'BRO0516',            |
+                                                |              |  'street_address' : '500 BROADWAY' |
+                                                |              │                                    |
+                                                │              │ }                                  │
+/api/meters/events                              │ GET          │ {                                  │if successful
+                                                │              │  'example': 'example',             │
+                                                │              │  'example': 'example'              │
+                                                │              │ }                                  │
 ```
 
 # Metermate Team
