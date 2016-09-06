@@ -87,7 +87,6 @@ server
 └── server.html
 ```
 
-# REST/CRUD outline
 
 # REST/CRUD outline
 
