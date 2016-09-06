@@ -10,25 +10,27 @@
 * [Bootstrap](http://getbootstrap.com/)
 * [FontAwesome](http://fontawesome.io/)
 
+# Environment Setup
+1. Install server-side dependencies:
 ```
-* First, install the npm dependencies
-  $ npm install
+$ npm install
 ```
+
+2. Install client-side dependencies:
 ```
-* Second, install the bower dependencies
-  $ bower install
+$ bower install
 ```
+
+3. Run the app on a local server:
 ```
-* Turn on your nodemon,
-  $ nodemon server/server.js
+$ node server/server.js
 ```
-```
-* Visit https://localhost:1337/ on your web browser
-```
+
+4. Visit https://localhost:1337/ on your web browser
 
 
 # Front-End
-Metermate's client side is built using AngularJS, Angular UI Router, Bootstrap, and FontAwesome
+Metermate's client side is built using AngularJS, Angular UI Router, Bootstrap, and FontAwesome.
 
 ```
 client
@@ -36,7 +38,6 @@ client
 ├── app
 │   ├── home
 |   |   ├── homeController.js
-|   |   |
 |   |   └── homeView.html
 |   |
 │   ├── map
@@ -44,25 +45,12 @@ client
 |   |   ├── mapFactories.js
 |   |   └── mapView.html
 |   |
-|   └──  app.js
+|   └── app.js
 |  
-├── pages
-|   |
-│   ├── home
-|   |   ├── home.js
-|   |   └── home.html
-|   |
-│   └── map
-|       ├── map.js
-|       └── map.html  
-│   
-|── assets
+├── assets
 │   ├── css
-|   |
 |   |── fonts
-|   |
 │   ├── img
-|   |
 |   └── js
 │  
 └── index.html
@@ -70,21 +58,24 @@ client
 
 
 # Back-End
-Metermate's server is built using Express, Node, Request, CORS, Body parser, and mySQL as our database.
+Metermate's server is built using Express, Node, and MySQL as our database.
 ```
 server
 ├── controllers
-│   └── meterController.js
-|   |
-│   └── styles
-│       └── styles.css
+│   └── metersController.js
 |  
 ├── helpers
 │   └── dbHelpers.js
-│   
+|  
+├── models
+│   └── metersModel.js
+|  
+├── routes
+│   └── routes.js
+│
 ├── db.js
-│  
-└── server.html
+│
+└── server.js
 ```
 
 # REST/CRUD outline
@@ -92,19 +83,19 @@ server
 ```
 ENDPOINT                                         METHOD         EXPECTED                               RESPONSE
 ──────────────────────────────────────────────   ─────────────  ────────────────────────────────────   
-/api/meter-events                              │ GET          │ {                                    │if successful                  
-                                               │              │  'example': 'example',               │   
-                                               │              │  'example': 'example'                │
-                                               │              │ }                                    │
-/api/get-meter-data                            │ GET          │ {                                    │if successful
-                                               │              │  'example': 'example',               │
-                                               │              │  'example': 'example'                │
-                                               │              │ }                                    │
+/api/meters/locations                           │ GET          │ {                                  │if successful                  
+                                                │              │  'example': 'example',             │   
+                                                │              │  'example': 'example'              │
+                                                │              │ }                                  │
+/api/meters/events                              │ GET          │ {                                  │if successful
+                                                │              │  'example': 'example',             │
+                                                │              │  'example': 'example'              │
+                                                │              │ }                                  │
 ```
 
 # Metermate Team
 
 * [Sam Chi - Product Owner](https://www.github.com/samsjchi)
 * [Christian Borja - Scrum Master](https://www.github.com/cborjah)
-* [Sam Kim - Web Developer](https://github.com/samkim28)
-* [Sandy Tran - Web Developer](https://github.com/justsandytran)
+* [Sam Kim - Dev Team](https://github.com/samkim28)
+* [Sandy Tran - Dev Team](https://github.com/justsandytran)
