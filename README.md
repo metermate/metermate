@@ -27,6 +27,13 @@
 ```
 
 
+# API Documentation
+
+* [Santa Monica Parking Meter API](https://parking.api.smgov.net/)
+* [Google Maps API](https://developers.google.com/maps/)
+
+
+
 # Front-End
 Metermate's client side is built using AngularJS, Angular UI Router, Bootstrap, and FontAwesome
 
