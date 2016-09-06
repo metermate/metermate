@@ -5,6 +5,7 @@ angular
     var areMetersLoaded = false;
     var markerCluster;
 
+
     $window.onload = function() {
 
       /* ---------- GOOGLE MAP ---------- */
