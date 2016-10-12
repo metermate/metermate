@@ -1,4 +1,5 @@
 var model = require('../models/metersModel.js');
+var database = require('../db.js');
 var dbHelpers = require('../helpers/dbHelpers.js');
 
 exports.locations = {
@@ -20,7 +21,9 @@ exports.events = {
 }
 
 function getEvents(req, res) {
-  model.events.get()
+  var boundaries = [Number(req.query.neLat), Number(req.query.swLat), Number(req.query.neLng), Number(req.query.swLng)];
+  console.log('boundaries in getEvents controller: ', boundaries);
+  model.events.get(boundaries)
     .then(function(data) {
       res.status(200).send(data);
     })
@@ -34,16 +37,14 @@ exports.latestData = {
 }
 
 function getLatestData(req, res) {
-  var meterData = [];
-  for (var i = 0; i < dbHelpers.latestData.length; i++) {
-    if(dbHelpers.latestData[i].latitude <= Number(req.query.neLat) &&
-       dbHelpers.latestData[i].latitude >= Number(req.query.swLat) &&
-       dbHelpers.latestData[i].longitude <= Number(req.query.neLng) &&
-       dbHelpers.latestData[i].longitude >= Number(req.query.swLng)) {
+  var boundaries = [Number(req.query.neLat), Number(req.query.swLat), Number(req.query.neLng), Number(req.query.swLng)];
 
-      meterData.push(dbHelpers.latestData[i]);
+  database.db.query('SELECT * FROM meters WHERE event_type IN ("SS", "SE") AND latitude <= ? AND latitude >= ? AND longitude <= ? AND longitude >= ?', boundaries, function(err, data) {
+    if (err) {
+      console.error('Error retrieving data from meterDB: ', err);
+    } else {
+      console.log('Successfully retrieved data from meterDB');
+      res.json(data);
     }
-  }
-  console.log('Number of meters in viewport: ', meterData.length);
-  res.send(meterData);
+  });
 };
