@@ -5,7 +5,6 @@ angular
     var areMetersLoaded = false;
     var markerCluster;
 
-
     $window.onload = function() {
 
       /* ---------- GOOGLE MAP ---------- */
@@ -19,7 +18,6 @@ angular
       // runs a function when the map becomes idle after zooming or moving around
       // this function gets the Southwest and Northeast coordinates of the current window view
       google.maps.event.addListener(map, 'idle', function() {
-        if(!isWindowOpen) {
           bounds = map.getBounds();
           sw = bounds.getSouthWest();
           ne = bounds.getNorthEast();
@@ -29,6 +27,8 @@ angular
             neLat: ne.lat(),
             neLng: ne.lng()
           };
+          
+          Map.updateMeterEvents(param);
 
           Map.getMeterData(param)
           .then(function(data) {
@@ -89,7 +89,6 @@ angular
 
               // opens info window when user clicks on a marker
               google.maps.event.addListener(marker, 'click', (function(marker, i) {
-                isWindowOpen = true;
                 return function () {
                   // adds meter status, area, and address in info window
                   infoWindow.setContent(
@@ -203,8 +202,6 @@ angular
           .catch(function(error) {
             console.error('Error retrieving data from getMeterData: ', error);
           });
-        }
       });
-      isWindowOpen = false;
     };
   });
