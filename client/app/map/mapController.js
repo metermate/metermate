@@ -5,7 +5,7 @@ angular
     var areMetersLoaded = false;
     var markerCluster;
 
-    $window.onload = function() {
+    $scope.load = function() {
 
       /* ---------- GOOGLE MAP ---------- */
       // creates the map on load
@@ -27,8 +27,8 @@ angular
             neLat: ne.lat(),
             neLng: ne.lng()
           };
-          
-          Map.updateMeterEvents(param);
+
+          // Map.updateMeterEvents(param);
 
           Map.getMeterData(param)
           .then(function(data) {
