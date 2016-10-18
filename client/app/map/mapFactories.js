@@ -7,6 +7,7 @@ angular
     };
 
     function getMeterData(param) {
+      console.log("+++LINE10 Fetching Meter Data");
       return $http({
         method: 'GET',
         url: '/api/meters/latest-data',
@@ -26,6 +27,7 @@ angular
     };
 
     function updateMeterEvents(param) {
+      console.log("+++LINE30 Updating Meter Events");
       return $http({
         method: 'GET',
         url: '/api/meters/events',

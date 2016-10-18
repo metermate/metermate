@@ -39,7 +39,7 @@ exports.latestData = {
 function getLatestData(req, res) {
   var boundaries = [Number(req.query.neLat), Number(req.query.swLat), Number(req.query.neLng), Number(req.query.swLng)];
 
-  database.db.query('SELECT * FROM meters WHERE event_type IN ("SS", "SE") AND latitude <= ? AND latitude >= ? AND longitude <= ? AND longitude >= ?', boundaries, function(err, data) {
+  database.db.query('SELECT * FROM meters WHERE latitude <= ? AND latitude >= ? AND longitude <= ? AND longitude >= ?', boundaries, function(err, data) {
     if (err) {
       console.error('Error retrieving data from meterDB: ', err);
     } else {

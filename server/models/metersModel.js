@@ -40,6 +40,7 @@ function getEvents(param) {
 
   var parsedDate = currDate.replace(/[-:.]/g, "");
   var finalDate = parsedDate.substr(1, 15).concat('Z');
+  console.log("+++LINE43 finalDate: ", finalDate);
 
   var url = 'https://parking.api.smgov.net/meters/events/since/' + finalDate;
 
