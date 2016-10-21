@@ -1,10 +1,12 @@
 var mysql = require('mysql');
+var dotenv = require('dotenv');
+dotenv.load();
 
 var db = mysql.createConnection({
-  host: 'mysql.kanadachi.com',
-  user: 'css_s',
-  password: 'kimchiboyz',
-  database: 'metermate'
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD
   // host: 'localhost',
   // user: 'root',
   // database: 'meterDB'
