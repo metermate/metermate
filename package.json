@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/samsjchi/metermate.git"
+    "url": "git+https://github.com/metermate/metermate.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/samsjchi/metermate/issues"
+    "url": "https://github.com/metermate/metermate/issues"
   },
-  "homepage": "https://github.com/samsjchi/metermate#readme",
+  "homepage": "https://github.com/metermate/metermate#readme",
   "dependencies": {
     "angular": "^1.5.8",
     "angular-ui-router": "^0.3.1",
