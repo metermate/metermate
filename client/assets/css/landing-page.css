@@ -1,11 +1,11 @@
 /* ---------- LANDING PAGE ---------- */
 header {
   position: relative;
-  width: 100%;
-  min-height: auto;
-  overflow-y: hidden;
   background: url("../img/home/promenade-bg.jpg");
-  background-position: 0% 5%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
   color: white;
 }
 header .header-content {
