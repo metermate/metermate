@@ -32,7 +32,6 @@ angular
 
           Map.getMeterData(param)
           .then(function(data) {
-            console.log('Data from getMeterData in MapCtrl: ', data);
             meterData = [];
             meterData = data;
 
@@ -71,7 +70,6 @@ angular
 
               // shows green meter if available, red meter if occupied
               if(meterData[i].event_type === 'SE') {
-                console.log('<-- # of available meters');
                 meterIcon.url = '../../assets/img/meter-icons/meter-icon-green.png';
                 marker.setIcon(meterIcon);
                 marker.status = 'Available';
@@ -134,7 +132,6 @@ angular
 
             // sets markers on map
             for (var i = 0; i < markers.length; i++) {
-              console.log('<-- total # of meters');
               markers[i].setMap(map);
             }
 
