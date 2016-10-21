@@ -1,7 +1,7 @@
 # MeterMate
 A map-based web application that helps you find parking in Santa Monica. Search for an available parking meter near your destination, park your car, and get on with your day.
 
-![metermatedemo](http://i.imgur.com/agiRcO3.gif)
+![metermate-demo](https://cloud.githubusercontent.com/assets/17018339/19594129/9b196f88-9738-11e6-8910-f8bbf3c5eb2b.gif)
 
 Check out the deployed application [here](http://metermate.herokuapp.com).
 
