@@ -16,6 +16,9 @@ section.team {
 section.team .team-content {
   position: relative;
   z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 section.team .team-content h2 {
   margin-top: 0;
