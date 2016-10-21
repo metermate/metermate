@@ -6,7 +6,7 @@
     "Sam Chi <samuel.sj.chi@gmail.com>"
   ],
   "license": "ISC",
-  "homepage": "https://github.com/samsjchi/metermate",
+  "homepage": "https://github.com/metermate/metermate",
   "ignore": [
     "**/.*",
     "node_modules",
